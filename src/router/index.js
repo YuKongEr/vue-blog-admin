@@ -29,7 +29,8 @@ export default new Router({
                 },
                 {
                     path: '/markdown',
-                    component: resolve => require(['../components/page/Markdown.vue'], resolve) // Vue-Quill-Editor组件
+                    // component: resolve => require(['../components/page/Markdown.vue'], resolve) // Vue-Quill-Editor组件
+                    component: resolve => require(['../components/page/writeBlog.vue'], resolve)
                 },
                 {
                     path: '/upload',
