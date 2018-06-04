@@ -23,19 +23,19 @@ module.exports = {
     },
     dev: {
         env: require('./dev.env'),
-        port: 8080,
+        port: 9999,
         autoOpenBrowser: true,
         assetsSubDirectory: 'static',
         assetsPublicPath: '/',
         proxyTable: {
-            '/api':{
-                target:'http://jsonplaceholder.typicode.com',
-                changeOrigin:true,
-                pathRewrite:{
-                    '/api':''
+            '/api': {
+                target: 'http://jsonplaceholder.typicode.com',
+                changeOrigin: true,
+                pathRewrite: {
+                    '/api': ''
                 }
             },
-            '/ms':{
+            '/ms': {
                 target: 'https://www.easy-mock.com/mock/592501a391470c0ac1fab128',
                 changeOrigin: true
             }
