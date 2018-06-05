@@ -117,6 +117,30 @@ export const appRouter = [
             component: () =>
                 import ('@/views/error-page/error-page.vue')
         }]
+    },
+    {
+        path: '/component',
+        icon: 'social-buffer',
+        name: 'component',
+        title: '博客管理',
+        component: Main,
+        children: [{
+                path: 'category-list',
+                icon: 'compose',
+                name: 'category-list',
+                title: '类目管理',
+                component: () =>
+                    import ('@/views/blog/category/category-list.vue')
+            },
+            {
+                path: 'text-editor',
+                icon: 'compose',
+                name: 'text-editor',
+                title: '博文管理',
+                component: () =>
+                    import ('@/views/my-components/text-editor/text-editor.vue')
+            }
+        ]
     }
 ];
 
