@@ -42,9 +42,25 @@ export const requestLogin = params => {
     console.log(params)
     return axios.post('/login', params).then(res => res)
 }
-//类目分页查询
+//博客类目分页查询
 export const getCategoryPage = params => {
     return getPage(params, "/category/page");
+}
+//博客添加类目
+export const addCategory = param => {
+    return axios.post("/category", param);
+}
+//博客类目主键查询
+export const getCategoryById = param => {
+    return axios.get("/category/id/" + param).then(res => res.data);
+}
+//博客类目更新
+export const updateCategory = param => {
+    return axios.put("/category", param).then(res => res.data);
+}
+//博客类删除
+export const deleteCategory = param => {
+    return axios.delete("/category/id/" + param).then(res => res.data);
 }
 
 
