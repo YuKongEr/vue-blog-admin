@@ -133,6 +133,14 @@ export const appRouter = [
                     import ('@/views/blog/category/category-list.vue')
             },
             {
+                path: 'tag-list',
+                icon: 'compose',
+                name: 'tag-list',
+                title: '标签管理',
+                component: () =>
+                    import ('@/views/blog/tag/tag-list.vue')
+            },
+            {
                 path: 'text-editor',
                 icon: 'compose',
                 name: 'text-editor',

@@ -22,7 +22,7 @@
 
       </Col>
       <Col span="12" class="category-header">
-      <Input v-model="query.categoryName" placeholder="请输入类目名称">
+      <Input v-model="query.tagName" placeholder="请输入标签名称">
       <Button slot="append" icon="ios-search" @click="getData"></Button>
       </Input>
       </Col>
@@ -35,34 +35,27 @@
     </Col>
 
 
-    <Modal v-model="show" title="添加博客类目" :mask-closable="false" :closable="false">
+    <Modal v-model="show" title="添加博客标签" :mask-closable="false" :closable="false">
       <Form ref="modalForm" :model="form" :rules="ruls" :label-width="80">
-        <FormItem label="类目名称" prop="categoryName">
-          <Input v-model.trim="form.categoryName"></Input>
+        <FormItem label="标签名称" prop="tagName">
+          <Input v-model.trim="form.tagName"></Input>
         </FormItem>
-        <FormItem label="类目权值" prop="categoryWeight">
-          <InputNumber v-model="form.categoryWeight"></InputNumber>
-        </FormItem>
-
       </Form>
       <div slot="footer">
         <Button type="default" :disabled="formSetting.loading" @click="show=false">取消</Button>
-        <Button type="primary" :loading="formSetting.loading" @click="addCategory">确定</Button>
+        <Button type="primary" :loading="formSetting.loading" @click="addTag">确定</Button>
       </div>
     </Modal>
 
 
 
-    <Modal v-model="updateShow" title="修改博客类目" :mask-closable="false" :closable="false">
+    <Modal v-model="updateShow" title="修改博客标签" :mask-closable="false" :closable="false">
       <Form ref="updateForm" :model="updateForm" :rules="ruls" :label-width="80">
-        <FormItem label="类目id" prop="categoryName">
+        <FormItem label="标签id" prop="categoryName">
           <Input v-model.trim="updateForm.id" disabled></Input>
         </FormItem>
-        <FormItem label="类目名称" prop="categoryName">
-          <Input v-model.trim="updateForm.categoryName"></Input>
-        </FormItem>
-        <FormItem label="类目权值" prop="categoryWeight">
-          <InputNumber v-model="updateForm.categoryWeight"></InputNumber>
+        <FormItem label="标签名称" prop="categoryName">
+          <Input v-model.trim="updateForm.tagName"></Input>
         </FormItem>
         <FormItem label="修改时间" prop="modifyTime">
           <Input v-bind:value="updateForm.modifyTime | formateDate" disabled></Input>
@@ -93,11 +86,11 @@
 </template>
 <script>
   import {
-    getCategoryPage,
-    addCategory,
-    getCategoryById,
-    updateCategory,
-    deleteCategory
+    getTagPage,
+    addTag,
+    getTagById,
+    updateTag,
+    deleteTag
   } from '@/api/api'
   import dayjs from 'dayjs'
   export default {
@@ -114,24 +107,19 @@
         },
         show: false,
         form: {
-          categoryName: "",
-          categoryWeight: 0
+          tagName: "a"
         },
         ruls: {
-          categoryName: [{
+          tagName: [{
             required: true,
             message: "请填写博客类目"
-          }],
-          categoryWeight: [{
-            required: true,
-            message: "请填写博客权值"
           }]
         },
         formSetting: {
           loading: false
         },
         query: {
-          categoryName: ""
+          tagName: ""
         },
         setting: {
           loading: true,
@@ -144,13 +132,8 @@
             sortable: true
           },
           {
-            title: '类目名称',
-            key: 'categoryName'
-          },
-          {
-            title: '类目权值',
-            key: 'categoryWeight',
-            sortable: true
+            title: '标签名称',
+            key: 'tagName'
           },
           {
             title: '创建时间',
@@ -165,12 +148,13 @@
             key: 'createTime',
             render: (h, params) => {
               return h('span', dayjs(params.row.modifyTime).format('YYYY年MM月DD日 HH:mm:ss'))
-            }
+            },
+            sortable: true
           },
           {
             title: '操作',
             key: 'action',
-            width: 140,
+            width: 160,
             align: 'center',
             render: (h, params) => {
               return h('div', [
@@ -224,10 +208,10 @@
        */
       async getData() {
         this.setting.loading = true;
-        let res = await getCategoryPage({
+        let res = await getTagPage({
           currPage: this.page.currPage - 1,
           pageSize: this.page.pageSize,
-          categoryName: this.query.categoryName
+          tagName: this.query.tagName
         })
         this.data = res.content;
         this.page.total = res.totalElements;
@@ -253,7 +237,7 @@
       /**
        * 添加博客类目
        */
-      async addCategory() {
+      async addTag() {
         this.$refs.modalForm.validate(valid => {
           if (valid) {
             this.add();
@@ -268,15 +252,16 @@
        */
       async add() {
         this.formSetting.loading = true;
-        let res = await addCategory(this.form);
+        console.log(this.form);
+        let res = await addTag(this.form);
 
         if (res.data.code == 1) {
-          this.$Message.success("博客类目" + this.form.categoryName +
+          this.$Message.success("博客标签" + this.form.tagName +
             " 添加成功");
           this.show = false;
           this.getData();
         } else {
-          this.$Message.error("博客类目" + this.form.categoryName + " 添加失败");
+          this.$Message.error("博客标签" + this.form.tagName + " 添加失败");
         }
         this.formSetting.loading = false;
       },
@@ -287,7 +272,7 @@
       exportData(type) {
         if (type === 1) {
           this.$refs.table.exportCsv({
-            filename: '博客类目数据-' + new Date().getTime(),
+            filename: '博客标签数据-' + new Date().getTime(),
             columns: this.columns.filter((col, index) => index > 0 && index < this.columns.length - 1),
             data: this.data
           });
@@ -297,7 +282,7 @@
        * 打开修改框
        */
       async openUpdateModal(id) {
-        let res = await getCategoryById(id);
+        let res = await getTagById(id);
         Object.assign(this.updateForm, res.data);
         this.updateShow = true;
       },
@@ -316,13 +301,13 @@
        */
       async update() {
         this.updateSetting.loading = true;
-        let res = await updateCategory(this.updateForm);
+        let res = await updateTag(this.updateForm);
         if (res.code == 1) {
-          this.$Message.success("博客类目" + this.updateForm.categoryName + " 更新成功");
+          this.$Message.success("博客标签" + this.updateForm.tagName + " 更新成功");
           this.updateShow = false;
           this.getData();
         } else {
-          this.$Message.error("博客类目" + this.updateForm.categoryName + " 更新失败");
+          this.$Message.error("博客标签" + this.updateForm.tagName + " 更新失败");
         }
         this.updateSetting.loading = false;
       },
@@ -337,7 +322,7 @@
         }
         this.setting.loading = true;
         try {
-          let res = await deleteCategory(this.removeObject.obj.id);
+          let res = await deleteTag(this.removeObject.obj.id);
           this.$Message.success("删除成功");
           this.data.splice(this.removeObject.index, 1);
         } catch (error) {

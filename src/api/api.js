@@ -64,6 +64,28 @@ export const deleteCategory = param => {
 }
 
 
+//博客标签分页查询
+export const getTagPage = params => {
+    return getPage(params, "/tag/page");
+}
+//博标签客添加
+export const addTag = param => {
+    return axios.post("/tag", param);
+}
+//博客标签主键查询
+export const getTagById = param => {
+    return axios.get("/tag/id/" + param).then(res => res.data);
+}
+//博客标签更新
+export const updateTag = param => {
+    return axios.put("/tag", param).then(res => res.data);
+}
+//博客标签删除
+export const deleteTag = param => {
+    return axios.delete("/tag/id/" + param).then(res => res.data);
+}
+
+
 /**
  * 
  * @param { 分页条件} data
