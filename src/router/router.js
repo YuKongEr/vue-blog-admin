@@ -126,7 +126,7 @@ export const appRouter = [
         component: Main,
         children: [{
                 path: 'category-list',
-                icon: 'compose',
+                icon: 'ios-folder',
                 name: 'category-list',
                 title: '类目管理',
                 component: () =>
@@ -134,7 +134,7 @@ export const appRouter = [
             },
             {
                 path: 'tag-list',
-                icon: 'compose',
+                icon: 'pricetags',
                 name: 'tag-list',
                 title: '标签管理',
                 component: () =>
