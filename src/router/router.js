@@ -55,6 +55,28 @@ export const locking = {
         import ('@/views/main-components/lockscreen/components/locking-page.vue')
 };
 
+
+export const blog = {
+    path: '/blog',
+    name: 'blog',
+    component: () =>
+        import ('@/views/blog/front/index.vue'),
+    redirect: '/blog/index',
+    children: [{
+        path: 'index',
+        name: 'index',
+        title: "主页",
+        component: () =>
+            import ('@/views/blog/front/main.vue'),
+    }, {
+        path: 'article/:id',
+        name: 'article',
+        title: "yukong的个人博客",
+        component: () =>
+            import ('@/views/blog/front/article.vue'),
+    }]
+};
+
 // 作为Main组件的子页面展示但是不在左侧菜单显示的路由写在otherRouter里
 export const otherRouter = {
     path: '/',
@@ -90,6 +112,7 @@ export const otherRouter = {
             name: 'shopping',
             component: () =>
                 import ('@/views/advanced-router/component/shopping-info.vue')
+
         }, // 用于展示带参路由
         {
             path: 'message',
@@ -97,6 +120,7 @@ export const otherRouter = {
             name: 'message_index',
             component: () =>
                 import ('@/views/message/message.vue')
+
         }
     ]
 };
@@ -117,6 +141,21 @@ export const appRouter = [
             component: () =>
                 import ('@/views/error-page/error-page.vue')
         }]
+    },
+    {
+        path: '/write-blog',
+        icon: 'compose',
+        name: 'write_blog',
+        component: Main,
+        title: '写博客',
+        children: [{
+            path: 'index',
+            title: '写博客',
+            name: 'write_blog_index',
+            component: () =>
+                import ('@/views/blog/write/write-blog.vue')
+        }]
+
     },
     {
         path: '/component',
@@ -142,12 +181,13 @@ export const appRouter = [
             },
             {
                 path: 'text-editor',
-                icon: 'compose',
+                icon: 'ios-book',
                 name: 'text-editor',
                 title: '博文管理',
                 component: () =>
                     import ('@/views/my-components/text-editor/text-editor.vue')
-            }
+            },
+
         ]
     }
 ];
@@ -158,6 +198,7 @@ export const routers = [
     otherRouter,
     preview,
     locking,
+    blog,
     ...appRouter,
     page500,
     page403,

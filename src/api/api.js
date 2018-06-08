@@ -27,7 +27,7 @@ axios.interceptors.response.use(function (response) {
     return response;
 }, function (error) {
     if (error) {
-        if (error.response.status) {
+        if (error.response.status == 403) {
             Cookies.remove('token');
             Cookies.remove('user');
             Cookies.remove('password');
@@ -85,6 +85,44 @@ export const deleteTag = param => {
     return axios.delete("/tag/id/" + param).then(res => res.data);
 }
 
+
+//博文分页查询
+export const getArticlePage = params => {
+    return getPage(params, "/article/page");
+}
+//博文添加
+export const addArticle = param => {
+    return axios.post("/article", param);
+}
+//博文主键查询
+export const getArticleById = param => {
+    return axios.get("/article/id/" + param).then(res => res.data);
+}
+//博文更新
+export const updateArticle = param => {
+    return axios.put("/article", param).then(res => res.data);
+}
+//博文删除
+export const deleteArticle = param => {
+    return axios.delete("/article/id/" + param).then(res => res.data);
+}
+
+export const findAllCategory = () => {
+    return axios.get("/index/category").then(res => res.data);
+}
+
+export const findAllTag = () => {
+    return axios.get("/index/tag").then(res => res.data);
+}
+
+
+export const getFrontArticlePage = params => {
+    return getPage(params, "/index/article/page");
+}
+
+export const getFrontArticleById = param => {
+    return axios.get("/index/article/id/" + param).then(res => res.data);
+}
 
 /**
  * 
