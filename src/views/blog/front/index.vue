@@ -52,23 +52,23 @@
         </div>
         <nav id="main-navbar" class="collapse navbar-collapse" itemscope itemtype="http://schema.org/SiteNavigationElement" role="navigation">
           <ul class="nav navbar-nav main-nav">
-            <li class="menu-item menu-item-home">
+            <router-link tag="li" to="/blog/index" class="menu-item menu-item-home">
               <a href="#">
                 <i class="icon icon-home-fill"></i>
-                <router-link tag="span" to="/blog/index" class="menu-title">
+                <span class="menu-title">
                   首页
-                </router-link>
+                </span>
               </a>
-            </li>
-            <li class="menu-item menu-item-archives">
+            </router-link>
+            <router-link tag="li" class="menu-item menu-item-archives" to="/blog/archive">
               <a href="#">
                 <i class="icon icon-archives-fill"></i>
 
-                <router-link tag="span" to="/blog/index" class="menu-title">
+                <span class="menu-title">
                   归档
-                </router-link>
+                </span>
               </a>
-            </li>
+            </router-link>
             <li class="menu-item menu-item-categories">
               <a href="/categories">
                 <i class="icon icon-folder"></i>
