@@ -139,7 +139,7 @@
           <h3 class="widget-title">公告</h3>
           <div class="widget-body">
             <div id="board">
-              <div class="content">个人知识星球，欢迎加入我们
+              <div class="content">{{notice.noticeContent}}个人知识星球，欢迎加入我们
               <!--  <a class="text-primary" href="https://163.lu/GTe6P3" target="_blank">https://163.lu/GTe6P3</a> 或者扫描以下二维码，并下载登录
                 <div>
                   <img src="./images/xingqiu-qrcode.jpg" width="140" height="140">
@@ -315,7 +315,8 @@
 <script>
   import {
     findAllCategory,
-    findAllTag
+    findAllTag,
+    findNotice
   } from '@/api/api'
   export default {
     data() {
@@ -326,7 +327,8 @@
           address: "Hangzhou,China"
         },
         tagList: [],
-        categoryList: []
+        categoryList: [],
+        notice:{}   //todo 这里如何写
       }
     },
     async created() {
@@ -334,6 +336,8 @@
       this.tagList = tagRes.data;
       let categoryRes = await findAllCategory();
       this.categoryList = categoryRes.data;
+      let noticeRes = await findNotice(); // todo 请求后台失败
+      this.notice = noticeRes.data;
     }
   }
 </script>

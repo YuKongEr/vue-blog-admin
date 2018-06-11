@@ -115,6 +115,10 @@ export const findAllTag = () => {
     return axios.get("/index/tag").then(res => res.data);
 }
 
+export const findNotice = () => {
+    console.log("11111111111");
+    return axios.get("/index/notice").then(res => res.data);
+}
 
 export const getFrontArticlePage = params => {
     return getPage(params, "/index/article/page");
@@ -122,6 +126,28 @@ export const getFrontArticlePage = params => {
 
 export const getFrontArticleById = param => {
     return axios.get("/index/article/id/" + param).then(res => res.data);
+}
+
+
+//公告分页查询
+export const getNoticePage = params => {
+    return getPage(params, "/notice/page");
+}
+//添加公告
+export const addNotice = param => {
+    return axios.post("/notice", param);
+}
+//公告主键查询
+export const getNoticeById = param => {
+    return axios.get("/notice/id/" + param).then(res => res.data);
+}
+//公告更新
+export const updateNotice = param => {
+    return axios.put("/notice", param).then(res => res.data);
+}
+//公告删除
+export const deleteNotice = param => {
+    return axios.delete("/notice/id/" + param).then(res => res.data);
 }
 
 /**
