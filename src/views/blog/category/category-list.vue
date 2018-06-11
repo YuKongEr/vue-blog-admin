@@ -73,7 +73,7 @@
       </Form>
       <div slot="footer">
         <Button type="default" :disabled="updateSetting.loading" @click="updateShow=false">取消</Button>
-        <Button type="primary" :loading="updateSetting.loading" @click="addCategory">确定</Button>
+        <Button type="primary" :loading="updateSetting.loading" @click="updateCategory">确定</Button>
       </div>
     </Modal>
     <Modal v-model="removeModal" width="360">
@@ -253,8 +253,9 @@
       /**
        * 添加博客类目
        */
-      async addCategory() {
+      addCategory() {
         this.$refs.modalForm.validate(valid => {
+          console.log(valid);
           if (valid) {
             this.add();
           }
@@ -304,7 +305,7 @@
       /**
        * 更新博客类目
        **/
-      async addCategory() {
+      async updateCategory() {
         this.$refs.updateForm.validate(valid => {
           if (valid) {
             this.update();
