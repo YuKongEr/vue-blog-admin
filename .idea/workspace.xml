@@ -4,14 +4,7 @@
     <bookmark url="file://$PROJECT_DIR$/src/views/blog/notice/notice-list.vue" line="88" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="9b17320d-ad41-4a9d-870e-a011a288c583" name="Default" comment="">
-      <change beforePath="" afterPath="$PROJECT_DIR$/src/views/blog/notice/notice-list.vue" />
-      <change beforePath="$PROJECT_DIR$/src/api/api.js" afterPath="$PROJECT_DIR$/src/api/api.js" />
-      <change beforePath="$PROJECT_DIR$/src/router/router.js" afterPath="$PROJECT_DIR$/src/router/router.js" />
-      <change beforePath="$PROJECT_DIR$/src/views/blog/category/category-list.vue" afterPath="$PROJECT_DIR$/src/views/blog/category/category-list.vue" />
-      <change beforePath="$PROJECT_DIR$/src/views/blog/front/index.vue" afterPath="$PROJECT_DIR$/src/views/blog/front/index.vue" />
-      <change beforePath="$PROJECT_DIR$/src/views/blog/tag/tag-list.vue" afterPath="$PROJECT_DIR$/src/views/blog/tag/tag-list.vue" />
-    </list>
+    <list default="true" id="9b17320d-ad41-4a9d-870e-a011a288c583" name="Default" comment="" />
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="TRACKING_ENABLED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
@@ -450,12 +443,12 @@
       <workItem from="1528470302250" duration="3833000" />
       <workItem from="1528621300977" duration="94000" />
       <workItem from="1528682870690" duration="7609000" />
-      <workItem from="1528702050740" duration="15161000" />
+      <workItem from="1528702050740" duration="15341000" />
     </task>
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="33841000" />
+    <option name="totallyTimeSpent" value="34021000" />
   </component>
   <component name="TodoView">
     <todo-panel id="selected-file">
