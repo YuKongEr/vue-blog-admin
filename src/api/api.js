@@ -108,13 +108,20 @@ export const deleteArticle = param => {
 }
 
 export const findAllCategory = () => {
-    return axios.get("/index/category").then(res => res.data);
+    return axios.get("/index/archive/category/").then(res => res.data);
 }
 
 export const findAllTag = () => {
-    return axios.get("/index/tag").then(res => res.data);
+    return axios.get("/index/archive/tag").then(res => res.data);
 }
 
+export const findAllMonth = () => {
+    return axios.get("/index/archive/month").then(res => res.data);
+}
+
+export const findArticleGroupByYear = () => {
+    return axios.get("/index/article/year").then(res => res.data);
+}
 
 export const getFrontArticlePage = params => {
     return getPage(params, "/index/article/page");

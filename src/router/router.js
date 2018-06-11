@@ -63,18 +63,26 @@ export const blog = {
         import ('@/views/blog/front/index.vue'),
     redirect: '/blog/index',
     children: [{
-        path: 'index',
-        name: 'index',
-        title: "主页",
-        component: () =>
-            import ('@/views/blog/front/main.vue'),
-    }, {
-        path: 'article/:id',
-        name: 'article',
-        title: "yukong的个人博客",
-        component: () =>
-            import ('@/views/blog/front/article.vue'),
-    }]
+            path: 'index',
+            name: 'index',
+            title: "主页",
+            component: () =>
+                import ('@/views/blog/front/main.vue'),
+        }, {
+            path: 'article/:id',
+            name: 'article',
+            title: "yukong的个人博客",
+            component: () =>
+                import ('@/views/blog/front/article.vue'),
+        },
+        {
+            path: 'archive',
+            name: 'archive',
+            title: "yukong的个人博客",
+            component: () =>
+                import ('@/views/blog/front/archive.vue'),
+        }
+    ]
 };
 
 // 作为Main组件的子页面展示但是不在左侧菜单显示的路由写在otherRouter里

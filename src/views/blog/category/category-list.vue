@@ -255,7 +255,6 @@
        */
       addCategory() {
         this.$refs.modalForm.validate(valid => {
-          console.log(valid);
           if (valid) {
             this.add();
           }

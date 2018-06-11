@@ -54,16 +54,19 @@
           <ul class="nav navbar-nav main-nav">
             <li class="menu-item menu-item-home">
               <a href="#">
-                 <i class="icon icon-home-fill"></i>
+                <i class="icon icon-home-fill"></i>
                 <router-link tag="span" to="/blog/index" class="menu-title">
-                 首页
-               </router-link>         
+                  首页
+                </router-link>
               </a>
             </li>
             <li class="menu-item menu-item-archives">
-              <a href="/archives">
+              <a href="#">
                 <i class="icon icon-archives-fill"></i>
-                <span class="menu-title">归档</span>
+
+                <router-link tag="span" to="/blog/index" class="menu-title">
+                  归档
+                </router-link>
               </a>
             </li>
             <li class="menu-item menu-item-categories">
@@ -140,7 +143,7 @@
           <div class="widget-body">
             <div id="board">
               <div class="content">个人知识星球，欢迎加入我们
-              <!--  <a class="text-primary" href="https://163.lu/GTe6P3" target="_blank">https://163.lu/GTe6P3</a> 或者扫描以下二维码，并下载登录
+                <!--  <a class="text-primary" href="https://163.lu/GTe6P3" target="_blank">https://163.lu/GTe6P3</a> 或者扫描以下二维码，并下载登录
                 <div>
                   <img src="./images/xingqiu-qrcode.jpg" width="140" height="140">
                 </div>-->
@@ -166,6 +169,7 @@
             <ul class="tag-list">
               <li class="tag-list-item" v-for="tag in tagList" :key="tag.id">
                 <a class="tag-list-link" href="/tags/Github/">{{tag.tagName}}</a>
+                <span class="category-list-count">{{tag.count}}</span>
               </li>
 
             </ul>
@@ -175,34 +179,15 @@
           <h3 class="widget-title">归档</h3>
           <div class="widget-body">
             <ul class="archive-list">
-              <li class="archive-list-item">
-                <a class="archive-list-link" href="/archives/2018/03/">三月 2018</a>
-                <span class="archive-list-count">2</span>
+              <li class="archive-list-item" v-for="month in monthList" :key="month.dataStr">
+                <a class="archive-list-link" href="/archives/2018/03/">{{month.dateStr}}</a>
+                <span class="archive-list-count">{{month.count}}</span>
               </li>
-              <li class="archive-list-item">
-                <a class="archive-list-link" href="/archives/2017/12/">十二月 2017</a>
-                <span class="archive-list-count">1</span>
-              </li>
-              <li class="archive-list-item">
-                <a class="archive-list-link" href="/archives/2017/11/">十一月 2017</a>
-                <span class="archive-list-count">1</span>
-              </li>
-              <li class="archive-list-item">
-                <a class="archive-list-link" href="/archives/2017/09/">九月 2017</a>
-                <span class="archive-list-count">1</span>
-              </li>
-              <li class="archive-list-item">
-                <a class="archive-list-link" href="/archives/2017/08/">八月 2017</a>
-                <span class="archive-list-count">3</span>
-              </li>
-              <li class="archive-list-item">
-                <a class="archive-list-link" href="/archives/2017/04/">四月 2017</a>
-                <span class="archive-list-count">1</span>
-              </li>
+
             </ul>
           </div>
         </div>
-        <div class="widget">
+        <!--  <div class="widget">
           <h3 class="widget-title">最新文章</h3>
           <div class="widget-body">
             <ul class="recent-post-list list-unstyled no-thumbnail">
@@ -269,7 +254,7 @@
               </li>
             </ul>
           </div>
-        </div>
+</div>-->
       </div>
     </aside>
     <main class="main" role="main">
@@ -315,7 +300,8 @@
 <script>
   import {
     findAllCategory,
-    findAllTag
+    findAllTag,
+    findAllMonth
   } from '@/api/api'
   export default {
     data() {
@@ -326,7 +312,8 @@
           address: "Hangzhou,China"
         },
         tagList: [],
-        categoryList: []
+        categoryList: [],
+        monthList: []
       }
     },
     async created() {
@@ -334,6 +321,8 @@
       this.tagList = tagRes.data;
       let categoryRes = await findAllCategory();
       this.categoryList = categoryRes.data;
+      let monthRes = await findAllMonth();
+      this.monthList = monthRes.data;
     }
   }
 </script>
