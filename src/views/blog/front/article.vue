@@ -12,10 +12,10 @@
                 <time v-bind:datetime="article.publishaTime " itemprop="datePublished">{{article.publishTime | formatDate}}</time>
               </a>
             </span>
-            <span class="article-category">
+            <router-link tag="span" class="article-category" v-bind:to="'/blog/category/' + article.category.categoryName">
               <i class="icon icon-folder"></i>
-              <a class="article-category-link" href="/categories/开发/">{{article.category.categoryName}}</a>
-            </span>
+              <a class="article-category-link">{{article.category.categoryName}}</a>
+            </router-link>
             <span class="article-tag" v-for="tag in article.tags" :key="tag.id">
               <i class="icon icon-tags"></i>
               <a class="article-tag-link" href="/tags/Github/">{{tag.tagName}}</a>
@@ -34,7 +34,7 @@
           <blockquote class="mt-2x">
             <ul class="post-copyright list-unstyled">
               <li class="post-copyright-link hidden-xs">
-              <!--  <strong>本文链接：</strong>
+                <!--  <strong>本文链接：</strong>
                 <a href="http://blog.cofess.com/2017/04/09/hexo-builds-a-personal-blog-and-deploys-to-github.html" title="Hexo搭建个人博客并部署到Github"
                   target="_blank" rel="external">http://blog.cofess.com/2017/04/09/hexo-builds-a-personal-blog-and-deploys-to-github.html</a>-->
               </li>
@@ -81,7 +81,7 @@
               <span>&nbsp;&nbsp;上一篇</span>
             </a>
           </li>
-         
+
         </ul>
         <button type="button" class="btn btn-fancy btn-donate pop-onhover bg-gradient-warning" data-toggle="modal" data-target="#donateModal">
           <span>赏</span>
@@ -140,7 +140,7 @@
   </div>
 </template>
 <script>
-import  './js/plugin.min.js'
+  import './js/plugin.min.js'
 
   import marked from 'marked'
   import hljs from 'highlight.js'

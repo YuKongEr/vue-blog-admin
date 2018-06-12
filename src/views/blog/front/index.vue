@@ -53,7 +53,7 @@
         <nav id="main-navbar" class="collapse navbar-collapse" itemscope itemtype="http://schema.org/SiteNavigationElement" role="navigation">
           <ul class="nav navbar-nav main-nav">
             <router-link tag="li" to="/blog/index" class="menu-item menu-item-home">
-              <a href="#">
+              <a>
                 <i class="icon icon-home-fill"></i>
                 <span class="menu-title">
                   首页
@@ -61,7 +61,7 @@
               </a>
             </router-link>
             <router-link tag="li" class="menu-item menu-item-archives" to="/blog/archive">
-              <a href="#">
+              <a>
                 <i class="icon icon-archives-fill"></i>
 
                 <span class="menu-title">
@@ -69,12 +69,12 @@
                 </span>
               </a>
             </router-link>
-            <li class="menu-item menu-item-categories">
-              <a href="/categories">
+            <router-link tag="li" class="menu-item menu-item-categories" to="/blog/category">
+              <a>
                 <i class="icon icon-folder"></i>
                 <span class="menu-title">分类</span>
               </a>
-            </li>
+            </router-link>
             <li class="menu-item menu-item-tags">
               <a href="/tags">
                 <i class="icon icon-tags"></i>
@@ -142,13 +142,8 @@
           <h3 class="widget-title">公告</h3>
           <div class="widget-body">
             <div id="board">
-<<<<<<< HEAD
               <div class="content">{{notice.noticeContent}}个人知识星球，欢迎加入我们
-              <!--  <a class="text-primary" href="https://163.lu/GTe6P3" target="_blank">https://163.lu/GTe6P3</a> 或者扫描以下二维码，并下载登录
-=======
-              <div class="content">个人知识星球，欢迎加入我们
                 <!--  <a class="text-primary" href="https://163.lu/GTe6P3" target="_blank">https://163.lu/GTe6P3</a> 或者扫描以下二维码，并下载登录
->>>>>>> 0d083b1904020021fa62b9dc0f185ed8541d3de3
                 <div>
                   <img src="./images/xingqiu-qrcode.jpg" width="140" height="140">
                 </div>-->
@@ -160,10 +155,11 @@
           <h3 class="widget-title">分类</h3>
           <div class="widget-body">
             <ul class="category-list">
-              <li class="category-list-item" v-for="category in categoryList" :key="category.id">
+              <router-link tag="li" class="category-list-item" v-for="category in categoryList" :key="category.id" v-if="category.count>0"
+                v-bind:to="'/blog/category/' + category.categoryName">
                 <a class="category-list-link" href="/categories/个人/">{{category.categoryName}}</a>
                 <span class="category-list-count">{{category.count}}</span>
-              </li>
+              </router-link>
 
             </ul>
           </div>
@@ -172,7 +168,7 @@
           <h3 class="widget-title">标签</h3>
           <div class="widget-body">
             <ul class="tag-list">
-              <li class="tag-list-item" v-for="tag in tagList" :key="tag.id">
+              <li class="tag-list-item" v-for="tag in tagList" :key="tag.id" v-if="tag.count>0">
                 <a class="tag-list-link" href="/tags/Github/">{{tag.tagName}}</a>
                 <span class="category-list-count">{{tag.count}}</span>
               </li>
@@ -306,11 +302,8 @@
   import {
     findAllCategory,
     findAllTag,
-<<<<<<< HEAD
-    findNotice
-=======
+    findNotice,
     findAllMonth
->>>>>>> 0d083b1904020021fa62b9dc0f185ed8541d3de3
   } from '@/api/api'
   export default {
     data() {
@@ -322,30 +315,26 @@
         },
         tagList: [],
         categoryList: [],
-<<<<<<< HEAD
-        notice:{}   //todo 这里如何写
-=======
+        notice: {
+          noticeContent: ""
+        }, //todo 这里如何写
         monthList: []
->>>>>>> 0d083b1904020021fa62b9dc0f185ed8541d3de3
       }
     },
     filters: {
       formatUrl(param) {
         return '/blog/archive/' + param.split("-").reverse().join("/");
-      }
+      },
     },
     async created() {
       let tagRes = await findAllTag();
       this.tagList = tagRes.data;
       let categoryRes = await findAllCategory();
       this.categoryList = categoryRes.data;
-<<<<<<< HEAD
       let noticeRes = await findNotice(); // todo 请求后台失败
       this.notice = noticeRes.data;
-=======
       let monthRes = await findAllMonth();
       this.monthList = monthRes.data;
->>>>>>> 0d083b1904020021fa62b9dc0f185ed8541d3de3
     }
   }
 </script>

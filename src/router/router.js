@@ -89,6 +89,20 @@ export const blog = {
             component: () =>
                 import ('@/views/blog/front/archive.vue'),
         },
+        {
+            path: 'category',
+            name: 'category',
+            title: 'yukong的个人博客',
+            component: () =>
+                import ('@/views/blog/front/category.vue')
+        },
+        {
+            path: 'category/:categoryName',
+            name: 'category1',
+            title: 'yukong的个人博客',
+            component: () =>
+                import ('@/views/blog/front/category.vue')
+        }
 
     ]
 };
@@ -211,6 +225,7 @@ export const appRouter = [
                 component: () =>
                     import ('@/views/blog/notice/notice-list.vue')
             },
+
         ]
     }
 ];

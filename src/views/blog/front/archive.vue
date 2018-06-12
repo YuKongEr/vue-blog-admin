@@ -9,13 +9,13 @@
         <section class="panel panel-default b-no" v-for="(item,key) in years" :key="key">
           <div class="panel-heading" role="tab">
             <h3 class="panel-title">
-              <a data-toggle="collapse" href="#collapse2018" aria-expanded="true">
+              <a data-toggle="collapse" v-bind:href="'#collapse'+item" aria-expanded="true">
                 <i class="icon icon-calendar-plus text-active"></i>
                 <i class="icon icon-calendar-minus text"></i> {{item}}</a>
             </h3>
           </div>
           {{articles.item}}
-          <div id="collapse2018" class="panel-collapse collapse in" role="tabpanel" aria-labelledby="heading2018">
+          <div v-bind:id="'collapse'+item" class="panel-collapse collapse in" role="tabpanel" aria-labelledby="heading2018">
             <div class="panel-body">
               <div class="collection">
                 <router-link tag="a" class="collection-item" v-for="ele in articles[item]" :to="'/blog/article/' + ele.id" :key="ele.id">
@@ -32,6 +32,8 @@
   </div>
 </template>
 <script>
+  import './js/plugin.min.js'
+
   import {
     findArticleGroupByYear,
     getArchiveByYearAndMonth
@@ -68,7 +70,6 @@
       }
     },
     created() {
-      console.log(this.$route.params.year)
       if (this.$route.params.year != "" && this.$route.params.year != undefined) {
         this.getDataByYearAnMonth({
           year: this.$route.params.year,
@@ -92,8 +93,7 @@
     },
     watch: {
       '$route' (to, from) {
-        console.log(to)
-        if (to.path.indexOf("/archive") > 0) {
+        if (to.path.indexOf("/archive") >= 0) {
 
           if (to.params.year != "" && to.params.year != undefined) {
             this.getDataByYearAnMonth({

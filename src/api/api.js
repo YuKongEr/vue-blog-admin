@@ -111,6 +111,10 @@ export const findAllCategory = () => {
     return axios.get("/index/archive/category/").then(res => res.data);
 }
 
+export const findCategoryByName = param => {
+    return axios.get("/index/archive/category/" + param).then(res => res.data);
+}
+
 export const findAllTag = () => {
     return axios.get("/index/archive/tag").then(res => res.data);
 }
@@ -125,6 +129,10 @@ export const findAllMonth = () => {
 
 export const findArticleGroupByYear = () => {
     return axios.get("/index/article/year").then(res => res.data);
+}
+
+export const findArticleGroupByCategory = param => {
+    return axios.get("/index/article/category" + param).then(res => res.data);
 }
 
 export const getFrontArticlePage = params => {
