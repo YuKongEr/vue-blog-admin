@@ -55,7 +55,7 @@
 
     <Modal v-model="updateShow" title="修改博客类目" :mask-closable="false" :closable="false">
       <Form ref="updateForm" :model="updateForm" :rules="ruls" :label-width="80">
-        <FormItem label="类目id" prop="categoryName">
+        <FormItem label="类目id" prop="id">
           <Input v-model.trim="updateForm.id" disabled></Input>
         </FormItem>
         <FormItem label="类目名称" prop="categoryName">

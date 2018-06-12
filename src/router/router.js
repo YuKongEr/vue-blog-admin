@@ -203,7 +203,14 @@ export const appRouter = [
                 component: () =>
                     import ('@/views/my-components/text-editor/text-editor.vue')
             },
-
+            {
+                path: 'notice-editor',
+                icon: 'speakerphone',
+                name: 'notice-editor',
+                title: '公告管理',
+                component: () =>
+                    import ('@/views/blog/notice/notice-list.vue')
+            },
         ]
     }
 ];

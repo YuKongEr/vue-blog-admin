@@ -1,11 +1,11 @@
 <style lang="less" scoped>
-  .category-page {
+  .notice-page {
     background-color: #fff;
     padding-top: 10px;
     padding-left: 5px;
     padding-right: 5px;
     padding-bottom: 10px;
-    .category-header {
+    .notice-header {
 
       margin-bottom: 10px;
     }
@@ -18,11 +18,10 @@
       <Col span="12" class="category-header">
       <Button type="info" icon="plus-round" :disabled="setting.loading" @click="show =true ">添加</Button>
       <Button type="success" :disabled="setting.loading" icon="refresh" @click="doRefresh">刷新</Button>
-      <Button type="primary" icon="ios-download " @click="exportData(1)">导出</Button>
 
       </Col>
       <Col span="12" class="category-header">
-      <Input v-model="query.tagName" placeholder="请输入标签名称">
+      <Input v-model="query.noticeTitle" placeholder="请输入公告名称">
       <Button slot="append" icon="ios-search" @click="getData"></Button>
       </Input>
       </Col>
@@ -35,27 +34,34 @@
     </Col>
 
 
-    <Modal v-model="show" title="添加博客标签" :mask-closable="false" :closable="false">
+    <Modal v-model="show" title="新增公告" :mask-closable="false" :closable="false">
       <Form ref="modalForm" :model="form" :rules="ruls" :label-width="80">
-        <FormItem label="标签名称" prop="tagName">
-          <Input v-model.trim="form.tagName"></Input>
+        <FormItem label="公告名称" prop="noticeTitle">
+          <Input v-model.trim="form.noticeTitle"></Input>
         </FormItem>
+        <FormItem label="公告内容" prop="noticeContent">
+          <Input v-model.trim="form.noticeContent"></Input>
+        </FormItem>
+
       </Form>
       <div slot="footer">
         <Button type="default" :disabled="formSetting.loading" @click="show=false">取消</Button>
-        <Button type="primary" :loading="formSetting.loading" @click="addTag">确定</Button>
+        <Button type="primary" :loading="formSetting.loading" @click="addNotice">确定</Button>
       </div>
     </Modal>
 
 
 
-    <Modal v-model="updateShow" title="修改博客标签" :mask-closable="false" :closable="false">
+    <Modal v-model="updateShow" title="修改公告" :mask-closable="false" :closable="false">
       <Form ref="updateForm" :model="updateForm" :rules="ruls" :label-width="80">
-        <FormItem label="标签id" prop="id">
+        <FormItem label="公告id" prop="id">
           <Input v-model.trim="updateForm.id" disabled></Input>
         </FormItem>
-        <FormItem label="标签名称" prop="categoryName">
-          <Input v-model.trim="updateForm.tagName"></Input>
+        <FormItem label="公告标题" prop="noticeTitle">
+          <Input v-model.trim="updateForm.noticeTitle"></Input>
+        </FormItem>
+        <FormItem label="公告内容" prop="noticeContent">
+          <Input v-model.trim="updateForm.noticeContent" />
         </FormItem>
         <FormItem label="修改时间" prop="modifyTime">
           <Input v-bind:value="updateForm.modifyTime | formateDate" disabled></Input>
@@ -66,7 +72,7 @@
       </Form>
       <div slot="footer">
         <Button type="default" :disabled="updateSetting.loading" @click="updateShow=false">取消</Button>
-        <Button type="primary" :loading="updateSetting.loading" @click="addCategory">确定</Button>
+        <Button type="primary" :loading="updateSetting.loading" @click="updateNotice">确定</Button>
       </div>
     </Modal>
     <Modal v-model="removeModal" width="360">
@@ -86,11 +92,11 @@
 </template>
 <script>
   import {
-    getTagPage,
-    addTag,
-    getTagById,
-    updateTag,
-    deleteTag
+    getNoticePage,
+    addNotice,
+    getNoticeById,
+    updateNotice,
+    deleteNotice
   } from '@/api/api'
   import dayjs from 'dayjs'
   export default {
@@ -107,19 +113,24 @@
         },
         show: false,
         form: {
-          tagName: "a"
+          noticeTitle: "",
+          noticeContent: ""
         },
         ruls: {
-          tagName: [{
+            noticeTitle: [{
             required: true,
-            message: "请填写博客类目"
+            message: "请填写公告标题"
+          }],
+            noticeContent: [{
+            required: true,
+            message: "请填写公告内容"
           }]
         },
         formSetting: {
           loading: false
         },
         query: {
-          tagName: ""
+           noticeTitle: ""
         },
         setting: {
           loading: true,
@@ -132,8 +143,13 @@
             sortable: true
           },
           {
-            title: '标签名称',
-            key: 'tagName'
+            title: '公告标题',
+            key: 'noticeTitle',
+            sortable: true
+          },
+          {
+            title: '公告内容',
+            key: 'noticeContent',
           },
           {
             title: '创建时间',
@@ -148,13 +164,12 @@
             key: 'createTime',
             render: (h, params) => {
               return h('span', dayjs(params.row.modifyTime).format('YYYY年MM月DD日 HH:mm:ss'))
-            },
-            sortable: true
+            }
           },
           {
             title: '操作',
             key: 'action',
-            width: 160,
+            width: 140,
             align: 'center',
             render: (h, params) => {
               return h('div', [
@@ -208,10 +223,10 @@
        */
       async getData() {
         this.setting.loading = true;
-        let res = await getTagPage({
+        let res = await getNoticePage({
           currPage: this.page.currPage - 1,
           pageSize: this.page.pageSize,
-          tagName: this.query.tagName
+          noticeTitle: this.query.noticeTitle
         })
         this.data = res.content;
         this.page.total = res.totalElements;
@@ -235,10 +250,11 @@
         this.getData();
       },
       /**
-       * 添加博客类目
+       * 添加公告
        */
-      async addTag() {
+      addNotice() {
         this.$refs.modalForm.validate(valid => {
+          console.log(valid);
           if (valid) {
             this.add();
           }
@@ -252,44 +268,30 @@
        */
       async add() {
         this.formSetting.loading = true;
-        console.log(this.form);
-        let res = await addTag(this.form);
+        let res = await addNotice(this.form);
 
         if (res.data.code == 1) {
-          this.$Message.success("博客标签" + this.form.tagName +
+          this.$Message.success("公告" + this.form.noticeTitle +
             " 添加成功");
           this.show = false;
           this.getData();
         } else {
-          this.$Message.error("博客标签" + this.form.tagName + " 添加失败");
+          this.$Message.error("公告" + this.form.noticeTitle + " 添加失败");
         }
         this.formSetting.loading = false;
-      },
-      /** 
-       * @description 
-       * 导出表格CSV 
-       **/
-      exportData(type) {
-        if (type === 1) {
-          this.$refs.table.exportCsv({
-            filename: '博客标签数据-' + new Date().getTime(),
-            columns: this.columns.filter((col, index) => index > 0 && index < this.columns.length - 1),
-            data: this.data
-          });
-        }
       },
       /**
        * 打开修改框
        */
       async openUpdateModal(id) {
-        let res = await getTagById(id);
+        let res = await getNoticeById(id);
         Object.assign(this.updateForm, res.data);
         this.updateShow = true;
       },
       /**
-       * 更新博客类目
+       * 更新公告类目
        **/
-      async addCategory() {
+      async updateNotice() {
         this.$refs.updateForm.validate(valid => {
           if (valid) {
             this.update();
@@ -301,13 +303,13 @@
        */
       async update() {
         this.updateSetting.loading = true;
-        let res = await updateTag(this.updateForm);
+        let res = await updateNotice(this.updateForm);
         if (res.code == 1) {
-          this.$Message.success("博客标签" + this.updateForm.tagName + " 更新成功");
+          this.$Message.success("公告" + this.updateForm.noticeTitle + " 更新成功");
           this.updateShow = false;
           this.getData();
         } else {
-          this.$Message.error("博客标签" + this.updateForm.tagName + " 更新失败");
+          this.$Message.error("公告" + this.updateForm.noticeTitle + " 更新失败");
         }
         this.updateSetting.loading = false;
       },
@@ -322,7 +324,7 @@
         }
         this.setting.loading = true;
         try {
-          let res = await deleteTag(this.removeObject.obj.id);
+          let res = await deleteNotice(this.removeObject.obj.id);
           this.$Message.success("删除成功");
           this.data.splice(this.removeObject.index, 1);
         } catch (error) {

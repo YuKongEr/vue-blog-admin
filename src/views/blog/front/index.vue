@@ -142,8 +142,13 @@
           <h3 class="widget-title">公告</h3>
           <div class="widget-body">
             <div id="board">
+<<<<<<< HEAD
+              <div class="content">{{notice.noticeContent}}个人知识星球，欢迎加入我们
+              <!--  <a class="text-primary" href="https://163.lu/GTe6P3" target="_blank">https://163.lu/GTe6P3</a> 或者扫描以下二维码，并下载登录
+=======
               <div class="content">个人知识星球，欢迎加入我们
                 <!--  <a class="text-primary" href="https://163.lu/GTe6P3" target="_blank">https://163.lu/GTe6P3</a> 或者扫描以下二维码，并下载登录
+>>>>>>> 0d083b1904020021fa62b9dc0f185ed8541d3de3
                 <div>
                   <img src="./images/xingqiu-qrcode.jpg" width="140" height="140">
                 </div>-->
@@ -301,7 +306,11 @@
   import {
     findAllCategory,
     findAllTag,
+<<<<<<< HEAD
+    findNotice
+=======
     findAllMonth
+>>>>>>> 0d083b1904020021fa62b9dc0f185ed8541d3de3
   } from '@/api/api'
   export default {
     data() {
@@ -313,7 +322,11 @@
         },
         tagList: [],
         categoryList: [],
+<<<<<<< HEAD
+        notice:{}   //todo 这里如何写
+=======
         monthList: []
+>>>>>>> 0d083b1904020021fa62b9dc0f185ed8541d3de3
       }
     },
     filters: {
@@ -326,8 +339,13 @@
       this.tagList = tagRes.data;
       let categoryRes = await findAllCategory();
       this.categoryList = categoryRes.data;
+<<<<<<< HEAD
+      let noticeRes = await findNotice(); // todo 请求后台失败
+      this.notice = noticeRes.data;
+=======
       let monthRes = await findAllMonth();
       this.monthList = monthRes.data;
+>>>>>>> 0d083b1904020021fa62b9dc0f185ed8541d3de3
     }
   }
 </script>
