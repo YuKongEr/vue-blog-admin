@@ -2,7 +2,7 @@
   <div>
     <article class="content article article-archives article-type-list" itemscope>
       <header class="article-header">
-        <h1 itemprop="title">归档</h1>
+        <h1 itemprop="title">{{archiveDate}}</h1>
         <p class="text-muted">共 {{blogCount}} 篇文章</p>
       </header>
       <div class="article-body">
@@ -33,7 +33,8 @@
 </template>
 <script>
   import {
-    findArticleGroupByYear
+    findArticleGroupByYear,
+    getArchiveByYearAndMonth
   } from '@/api/api'
   import {
     formatDate
@@ -41,16 +42,13 @@
   export default {
     data() {
       return {
-        articles: {}
+        articles: {},
+        archiveDate: "归档"
       }
     },
     computed: {
       years() {
-
         let newkey = Object.keys(this.articles).sort().reverse();
-
-
-
         return newkey; //返回排好序的新对象 }
       },
       blogCount() {
@@ -70,12 +68,44 @@
       }
     },
     created() {
-      this.getData();
+      console.log(this.$route.params.year)
+      if (this.$route.params.year != "" && this.$route.params.year != undefined) {
+        this.getDataByYearAnMonth({
+          year: this.$route.params.year,
+          month: this.$route.params.month
+        })
+        this.archiveDate = "归档:" + this.$route.params.year + "/" + this.$route.params.month;
+      } else {
+        this.getData();
+
+      }
     },
     methods: {
       async getData() {
         let res = await findArticleGroupByYear();
         this.articles = res.data;
+      },
+      async getDataByYearAnMonth(query) {
+        let res = await getArchiveByYearAndMonth(query);
+        this.articles = res.data;
+      }
+    },
+    watch: {
+      '$route' (to, from) {
+        console.log(to)
+        if (to.path.indexOf("/archive") > 0) {
+
+          if (to.params.year != "" && to.params.year != undefined) {
+            this.getDataByYearAnMonth({
+              year: to.params.year,
+              month: to.params.month
+            })
+            this.archiveDate = "归档:" + to.params.year + "/" +
+              to.params.month;
+          } else {
+            this.getData();
+          }
+        }
       }
     }
   }

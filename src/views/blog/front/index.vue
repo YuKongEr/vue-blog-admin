@@ -179,10 +179,10 @@
           <h3 class="widget-title">归档</h3>
           <div class="widget-body">
             <ul class="archive-list">
-              <li class="archive-list-item" v-for="month in monthList" :key="month.dataStr">
-                <a class="archive-list-link" href="/archives/2018/03/">{{month.dateStr}}</a>
+              <router-link v-bind:to=" month.dateStr|formatUrl" tag="li" class="archive-list-item" v-for="month in monthList" :key="month.dataStr">
+                <a class="archive-list-link">{{month.dateStr}}</a>
                 <span class="archive-list-count">{{month.count}}</span>
-              </li>
+              </router-link>
 
             </ul>
           </div>
@@ -314,6 +314,11 @@
         tagList: [],
         categoryList: [],
         monthList: []
+      }
+    },
+    filters: {
+      formatUrl(param) {
+        return '/blog/archive/' + param.split("-").reverse().join("/");
       }
     },
     async created() {

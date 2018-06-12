@@ -77,11 +77,19 @@ export const blog = {
         },
         {
             path: 'archive',
-            name: 'archive',
+            name: 'archive1',
             title: "yukong的个人博客",
             component: () =>
                 import ('@/views/blog/front/archive.vue'),
-        }
+        },
+        {
+            path: 'archive/:year/:month',
+            name: 'archive2',
+            title: "yukong的个人博客",
+            component: () =>
+                import ('@/views/blog/front/archive.vue'),
+        },
+
     ]
 };
 

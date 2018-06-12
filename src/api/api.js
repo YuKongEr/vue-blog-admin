@@ -131,6 +131,10 @@ export const getFrontArticleById = param => {
     return axios.get("/index/article/id/" + param).then(res => res.data);
 }
 
+export const getArchiveByYearAndMonth = param => {
+    return axios.get("/index/archive/" + param.year + "/" + param.month).then(res => res.data);
+}
+
 /**
  * 
  * @param { 分页条件} data
