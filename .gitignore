@@ -7,3 +7,9 @@ node_modules
 \.settings/
 build/env.js
 dist/
+src/views/access
+src/views/advanced-router
+src/views/form
+src/views/table
+src/views/own-space
+src/views/international
