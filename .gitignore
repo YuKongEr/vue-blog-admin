@@ -9,5 +9,4 @@ build/env.js
 dist/
 src/views/access
 src/views/tables
-src/views/own-space
 src/views/international
