@@ -75,12 +75,12 @@
                 <span class="menu-title">分类</span>
               </a>
             </router-link>
-            <li class="menu-item menu-item-tags">
-              <a href="/tags">
+            <router-link tag="li" class="menu-item menu-item-tags" to="/blog/tag">
+              <a>
                 <i class="icon icon-tags"></i>
                 <span class="menu-title">标签</span>
               </a>
-            </li>
+            </router-link>
             <li class="menu-item menu-item-repository">
               <a href="/repository">
                 <i class="icon icon-project"></i>
@@ -157,7 +157,7 @@
             <ul class="category-list">
               <router-link tag="li" class="category-list-item" v-for="category in categoryList" :key="category.id" v-if="category.count>0"
                 v-bind:to="'/blog/category/' + category.categoryName">
-                <a class="category-list-link" href="/categories/个人/">{{category.categoryName}}</a>
+                <a class="category-list-link">{{category.categoryName}}</a>
                 <span class="category-list-count">{{category.count}}</span>
               </router-link>
 
@@ -168,10 +168,10 @@
           <h3 class="widget-title">标签</h3>
           <div class="widget-body">
             <ul class="tag-list">
-              <li class="tag-list-item" v-for="tag in tagList" :key="tag.id" v-if="tag.count>0">
-                <a class="tag-list-link" href="/tags/Github/">{{tag.tagName}}</a>
+              <router-link tag="li" class="tag-list-item" v-for="tag in tagList" :key="tag.id" v-if="tag.count>0" v-bind:to="'/blog/tag/' + tag.tagName">
+                <a class="tag-list-link">{{tag.tagName}}</a>
                 <span class="category-list-count">{{tag.count}}</span>
-              </li>
+              </router-link>
 
             </ul>
           </div>

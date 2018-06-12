@@ -135,6 +135,10 @@ export const findArticleGroupByCategory = param => {
     return axios.get("/index/article/category" + param).then(res => res.data);
 }
 
+export const findArticleGroupByTag = param => {
+    return axios.get("/index/article/tag" + param).then(res => res.data);
+}
+
 export const getFrontArticlePage = params => {
     return getPage(params, "/index/article/page");
 }

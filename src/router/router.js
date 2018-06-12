@@ -102,6 +102,20 @@ export const blog = {
             title: 'yukong的个人博客',
             component: () =>
                 import ('@/views/blog/front/category.vue')
+        },
+        {
+            path: 'tag',
+            name: 'tag',
+            title: 'yukong的个人博客',
+            component: () =>
+                import ('@/views/blog/front/tag.vue')
+        },
+        {
+            path: 'tag/:tagName',
+            name: 'tag1',
+            title: 'yukong的个人博客',
+            component: () =>
+                import ('@/views/blog/front/tag.vue')
         }
 
     ]
