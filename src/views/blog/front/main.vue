@@ -4,9 +4,9 @@
       :key="article.id">
       <div class="article-header">
         <h1 itemprop="name">
-           <router-link tag="a"  :to="'/blog/article/' + article.id"  class="article-title">
-                 {{article.articleTitle}}
-               </router-link>
+          <router-link tag="a" :to="'/blog/article/' + article.id" class="article-title">
+            {{article.articleTitle}}
+          </router-link>
         </h1>
       </div>
       <p class="article-meta">
@@ -21,9 +21,9 @@
           <i class="icon icon-folder"></i>
           <a class="article-category-link" href="/categories/开发/">{{article.category.categoryName}}</a>
         </span>
-<span class="article-tag" v-for="tag in article.tags" :key="tag.id">
+        <span class="article-tag" v-for="tag in article.tags" :key="tag.id">
           <i class="icon icon-tags"></i>
-          <a class="article-tag-link" href="/tags/程序员/" >{{tag.tagName}}</a>
+          <a class="article-tag-link" href="/tags/程序员/">{{tag.tagName}}</a>
         </span>
         <span class="post-comment">
           <i class="icon icon-comment"></i>
@@ -56,7 +56,7 @@
     filters: {
       formatDate(time) {
         var date = new Date(time);
-        return formatDate(date, "yyyy-MM-dd hh:mm:ss");
+        return formatDate(date, "MM月dd");
       }
     },
     created() {

@@ -2,7 +2,7 @@
   <div>
     <article class="content article article-archives article-type-list" itemscope>
       <header class="article-header">
-        <h1 itemprop="title">{{archiveDate}}</h1>
+        <h1 itemprop="title" style="margin-top: 0;">{{archiveDate}}</h1>
         <p class="text-muted">共 {{blogCount}} 篇文章</p>
       </header>
       <div class="article-body">

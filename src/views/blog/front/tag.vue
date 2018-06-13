@@ -2,7 +2,7 @@
   <div>
     <article class="article article-tags post-type-list" itemscope>
       <header class="article-header">
-        <h1 itemprop="name" class="hidden-xs">{{tagName}}</h1>
+        <h1 itemprop="name" style="margin-top: 0;">{{tagName}}</h1>
         <p class="text-muted hidden-xs">{{tagList | formateCount}}</p>
         <nav role="navigation" id="nav-main" class="okayNav" style="visibility:visible">
           <ul>

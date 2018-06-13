@@ -2,7 +2,7 @@
   <div>
     <article class="article article-categories article-type-list" itemscope>
       <header class="article-header">
-        <h1 itemprop="name" class="hidden-xs">{{categoryName}}</h1>
+        <h1 itemprop="name" style="margin-top: 0;">{{categoryName}}</h1>
         <p class="text-muted hidden-xs">{{categoryList | formateCount}}</p>
         <nav id="nav-main" class="okayNav" style="visibility:visible">
           <ul>

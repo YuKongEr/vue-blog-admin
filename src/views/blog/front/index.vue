@@ -2,8 +2,7 @@
   @import './css/style.css';
 </style>
 <template>
-
-  <body class="main-center" itemscope itemtype="http://schema.org/WebPage">
+  <div class="main-center" itemscope itemtype="http://schema.org/WebPage">
     <header class="header" itemscope itemtype="http://schema.org/WPHeader">
       <div class="slimContent">
         <div class="navbar-header">
@@ -296,7 +295,7 @@
       </div> -->
     </footer>
 
-  </body>
+  </div>
 </template>
 <script>
   import {
@@ -305,6 +304,7 @@
     findNotice,
     findAllMonth
   } from '@/api/api'
+  import './js/plugin.min.js'
   export default {
     data() {
       return {

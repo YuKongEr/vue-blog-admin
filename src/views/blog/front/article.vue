@@ -1,10 +1,10 @@
 <template>
   <div>
 
-    <div class="content">
+    <div class="content" style="    margin-bottom: 50px;">
       <article id="post-hexo-builds-a-personal-blog-and-deploys-to-github" class="article article-type-post" itemscope itemtype="http://schema.org/BlogPosting">
         <div class="article-header">
-          <h1 class="article-title" itemprop="name">{{article.articleTitle}}</h1>
+          <h1 class="article-title" itemprop="name" style="margin-top: 0;">{{article.articleTitle}}</h1>
           <div class="article-meta">
             <span class="article-date">
               <i class="icon icon-calendar-check"></i>
