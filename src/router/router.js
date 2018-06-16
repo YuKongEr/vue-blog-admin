@@ -196,6 +196,9 @@ export const appRouter = [
             path: 'index',
             title: '写博客',
             name: 'write_blog_index',
+            meta: {
+                keepAlive: true // 需要被缓存
+              },
             component: () =>
                 import ('@/views/blog/write/write-blog.vue')
         }]
@@ -229,7 +232,7 @@ export const appRouter = [
                 name: 'text-editor',
                 title: '博文管理',
                 component: () =>
-                    import ('@/views/my-components/text-editor/text-editor.vue')
+                    import ('@/views/blog/blog/index.vue')
             },
             {
                 path: 'notice-editor',
