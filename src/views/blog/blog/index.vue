@@ -2,13 +2,11 @@
     <Row class="blog-page">
     <Row>
       <Col span="12" class="blog-header">
-      <Button type="info" icon="plus-round" :disabled="setting.loading" @click="show =true ">添加</Button>
       <Button type="success" :disabled="setting.loading" icon="refresh" @click="doRefresh">刷新</Button>
-      <Button type="primary" icon="ios-download " @click="exportData(1)">导出</Button>
 
       </Col>
       <Col span="12" class="blog-header">
-      <Input v-model="query.blogTitle" placeholder="请输入博客名称">
+      <Input v-model="query.articleTitle" placeholder="请输入博客名称">
       <Button slot="append" icon="ios-search" @click="getData"></Button>
       </Input>
       </Col>
@@ -45,7 +43,7 @@ export default {
         return {
             removeModal:false,
             query:{
-                blogTitle:""
+                articleTitle:""
             },
             setting:{
                 loading:false,
@@ -70,19 +68,23 @@ export default {
                                     }
                                 }),
                                 h('strong', '  '+params.row.category.categoryName)
-                            ]);
+                    ]);
             }
             
           },
           {
-            title: '博客标签',
-            key: 'tags'
+            title: '博客状态',
+            key: 'articleStatus',
+             render:(h,params) => {
+                return h('span',
+                    {
+                        style: {color: params.row.articleStatus == 1 ? 'green' : 'red'
+                    }
+                }, params.row.articleStatus == 1 ? '发布' : '草稿')
+            },
+            sortable: true
           },
           {
-            title: '博客状态',
-            key: 'articleStatus'
-          },
-           {
             title: '发布时间',
             key: 'publishTime',
             render: (h, params) => {
@@ -106,10 +108,11 @@ export default {
                   },
                   on: {
                     click: () => {
-                      this.openUpdateModal(params.row.id)
+                      this.openModifyBlog(params.row.id)
                     }
                   }
-                }, '修改'), h('Button', {
+                }, '修改'),
+                 h('Button', {
                   props: {
                     type: 'error',
                     size: 'small'
@@ -145,16 +148,39 @@ export default {
             this.setting.loading = true;
             let res = await getArticlePage({
             currPage: this.page.currPage - 1,
-            pageSize: this.page.pageSize
+            pageSize: this.page.pageSize,
+            articleTitle: this.query.articleTitle
             })
             this.data = res.content;
             this.page.total = res.totalElements;
             this.setting.loading = false;
         },
-        currPageChange(){},
-        pageSizeChange(){},
+        /**
+        * 页码改变
+        */
+        currPageChange(currPage) {
+          this.page.currPage = currPage;
+          this.getData()
+        },
+
+        /**
+        * pageSize改变
+        */
+        pageSizeChange(pageSize) {
+          this.page.pageSize = pageSize;
+          this.getData();
+        },
+        doRefresh() {
+        this.getData();
+        },
         remove(){},
-        doRefresh(){},
+        renderTags(tags){
+          console.log(tags);
+          return tags.length;
+        },
+        openModifyBlog(id){
+            this.$router.push({path:'/write-blog/index/' + id});
+        }
     }
 }
 </script>

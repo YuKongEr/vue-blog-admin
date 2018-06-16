@@ -14,6 +14,12 @@
     padding-left: 7px;
     padding-right: 7px;
   }
+  .sred{
+    color: red;
+  }
+  .sgreen{
+    color: green;
+  }
 </style>
 
 
@@ -43,6 +49,7 @@
           <mavon-editor v-model="content" :toolbars="toolbars" :codeStyle="'monokai-sublime'" style="height:490px;margin-bottom:50px;"
           />
           <Affix :offset-bottom="20">
+            <span  style=" right:200px;position: absolute;bottom:20px; ">当前状态: <span :class="isPushlish?'sgreen':'sred'">{{publishStr}}</span></span>
             <Button type="primary" @click="publish" style=" right:50px;position: absolute;bottom:20px; ">发布</Button>
 
           </Affix>
@@ -57,7 +64,8 @@
   import {
     getTagPage,
     getCategoryPage,
-    addArticle
+    addArticle,
+    getFrontArticleById
   } from '@/api/api'
   export default {
     data: function () {
@@ -68,6 +76,7 @@
         tagData: [],
         loading: false,
         options: [],
+        articleStatus:0,
         content: "",
         toolbars: {
           bold: true, // 粗体
@@ -107,13 +116,47 @@
       };
     },
     async mounted() {
-      let res = await getCategoryPage({
-        currPage: 0,
-        pageSize: 9999
-      })
-      this.categoryOptions = res.content;
+      
+    this.init();
+    },
+    computed:{
+      isPushlish(){
+        if(this.articleStatus == 1){
+          return true;
+        } else {
+          return false;
+        }
+      },
+       publishStr(){
+        if(this.articleStatus == 1){
+          return "发布";
+        } else if(this.articleStatus == 0){
+          return "草稿";
+        }
+      }
     },
     methods: {
+      async init(){
+        let id = this.$route.params.id;
+        if (id != undefined && id != "") {
+          let articleRes = await getFrontArticleById(id);
+          articleRes = articleRes.data;
+
+          this.title = articleRes.articleTitle;
+          this.content = articleRes.articleContent;
+          this.categoryData = articleRes.category.id;
+          this.tagData = this.transferTagObj2Array(articleRes.tags);
+          this.options = articleRes.tags;
+          this.articleStatus = articleRes.articleStatus;
+          console.log(this.options);
+        }
+
+        let res = await getCategoryPage({
+          currPage: 0,
+          pageSize: 9999
+        })
+        this.categoryOptions = res.content;
+      },
       async remoteMethod(query) {
         if (query !== '') {
           this.loading = true;
@@ -164,6 +207,14 @@
           this.$Message.error("博客" + article.articleTitle + " 发布失败");
         }
 
+      },
+
+      transferTagObj2Array(tags){
+        let ids = new Array();
+        tags.forEach(element => {
+          ids.push(element.id)
+        });
+        return ids;
       }
     }
   };
