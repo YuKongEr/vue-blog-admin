@@ -62,7 +62,10 @@ export const locking = {
     component: () =>
         import ('@/views/main-components/lockscreen/components/locking-page.vue')
 };
-
+export const index = {
+    path: '/',
+    redirect: '/blog/index',
+}
 
 export const blog = {
     path: '/blog',
@@ -155,7 +158,7 @@ export const blog = {
 
 // 作为Main组件的子页面展示但是不在左侧菜单显示的路由写在otherRouter里
 export const otherRouter = {
-    path: '/',
+    path: '/sys',
     name: 'otherRouter',
     redirect: '/home',
     component: Main,
@@ -311,6 +314,7 @@ export const routers = [
     preview,
     locking,
     blog,
+    index,
     ...appRouter,
     page500,
     page403,
