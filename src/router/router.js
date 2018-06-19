@@ -5,7 +5,8 @@ export const loginRouter = {
     path: '/login',
     name: 'login',
     meta: {
-        title: 'Login - 登录'
+        title: 'Login - 登录',
+        requireAuth: false,
     },
     component: () =>
         import ('@/views/login.vue')
@@ -15,7 +16,8 @@ export const page404 = {
     path: '/*',
     name: 'error-404',
     meta: {
-        title: '404-页面不存在'
+        title: '404-页面不存在',
+        requireAuth: false,
     },
     component: () =>
         import ('@/views/error-page/404.vue')
@@ -27,6 +29,10 @@ export const page403 = {
         title: '403-权限不足'
     },
     name: 'error-403',
+    meta: {
+        requireAuth: false,
+        requireAuth: false,
+    },
     component: () =>
         import ('@//views/error-page/403.vue')
 };
@@ -34,9 +40,11 @@ export const page403 = {
 export const page500 = {
     path: '/500',
     meta: {
-        title: '500-服务端错误'
+        title: '500-服务端错误',
+        requireAuth: false,
     },
     name: 'error-500',
+  
     component: () =>
         import ('@/views/error-page/500.vue')
 };
@@ -54,7 +62,10 @@ export const locking = {
     component: () =>
         import ('@/views/main-components/lockscreen/components/locking-page.vue')
 };
-
+export const index = {
+    path: '/',
+    redirect: '/blog/index',
+}
 
 export const blog = {
     path: '/blog',
@@ -66,12 +77,18 @@ export const blog = {
             path: 'index',
             name: 'index',
             title: "主页",
+            meta: {
+                requireAuth: false,
+            },
             component: () =>
                 import ('@/views/blog/front/main.vue'),
         }, {
             path: 'article/:id',
             name: 'article',
             title: "yukong的个人博客",
+            meta: {
+                requireAuth: false,
+            },
             component: () =>
                 import ('@/views/blog/front/article.vue'),
         },
@@ -79,6 +96,9 @@ export const blog = {
             path: 'archive',
             name: 'archive1',
             title: "yukong的个人博客",
+            meta: {
+                requireAuth: false,
+            },
             component: () =>
                 import ('@/views/blog/front/archive.vue'),
         },
@@ -86,6 +106,9 @@ export const blog = {
             path: 'archive/:year/:month',
             name: 'archive2',
             title: "yukong的个人博客",
+            meta: {
+                requireAuth: false,
+            },
             component: () =>
                 import ('@/views/blog/front/archive.vue'),
         },
@@ -93,6 +116,9 @@ export const blog = {
             path: 'category',
             name: 'category',
             title: 'yukong的个人博客',
+            meta: {
+                requireAuth: false,
+            },
             component: () =>
                 import ('@/views/blog/front/category.vue')
         },
@@ -100,6 +126,9 @@ export const blog = {
             path: 'category/:categoryName',
             name: 'category1',
             title: 'yukong的个人博客',
+            meta: {
+                requireAuth: false,
+            },
             component: () =>
                 import ('@/views/blog/front/category.vue')
         },
@@ -107,6 +136,9 @@ export const blog = {
             path: 'tag',
             name: 'tag',
             title: 'yukong的个人博客',
+            meta: {
+                requireAuth: false,
+            },
             component: () =>
                 import ('@/views/blog/front/tag.vue')
         },
@@ -114,6 +146,9 @@ export const blog = {
             path: 'tag/:tagName',
             name: 'tag1',
             title: 'yukong的个人博客',
+            meta: {
+                requireAuth: false,
+            },
             component: () =>
                 import ('@/views/blog/front/tag.vue')
         }
@@ -123,7 +158,7 @@ export const blog = {
 
 // 作为Main组件的子页面展示但是不在左侧菜单显示的路由写在otherRouter里
 export const otherRouter = {
-    path: '/',
+    path: '/sys',
     name: 'otherRouter',
     redirect: '/home',
     component: Main,
@@ -165,6 +200,16 @@ export const otherRouter = {
             component: () =>
                 import ('@/views/message/message.vue')
 
+        },
+        {
+            path: '/write-blog/index/:id',
+            title: '写博客',
+            name: 'write_blog_index1',
+            meta: {
+                keepAlive: true // 需要被缓存
+              },
+            component: () =>
+                import ('@/views/blog/write/write-blog.vue')
         }
     ]
 };
@@ -182,6 +227,9 @@ export const appRouter = [
             path: 'index',
             title: '错误页面',
             name: 'errorpage_index',
+            meta: {
+                requireAuth: true 
+              },
             component: () =>
                 import ('@/views/error-page/error-page.vue')
         }]
@@ -196,6 +244,9 @@ export const appRouter = [
             path: 'index',
             title: '写博客',
             name: 'write_blog_index',
+            meta: {
+                requireAuth: true 
+              },
             component: () =>
                 import ('@/views/blog/write/write-blog.vue')
         }]
@@ -212,6 +263,9 @@ export const appRouter = [
                 icon: 'ios-folder',
                 name: 'category-list',
                 title: '类目管理',
+                meta: {
+                    requireAuth: true 
+                  },
                 component: () =>
                     import ('@/views/blog/category/category-list.vue')
             },
@@ -220,22 +274,31 @@ export const appRouter = [
                 icon: 'pricetags',
                 name: 'tag-list',
                 title: '标签管理',
+                meta: {
+                    requireAuth: true 
+                  },
                 component: () =>
                     import ('@/views/blog/tag/tag-list.vue')
             },
             {
-                path: 'text-editor',
+                path: 'blog-list',
                 icon: 'ios-book',
-                name: 'text-editor',
+                name: 'blog-list',
                 title: '博文管理',
+                meta: {
+                    requireAuth: true 
+                  },
                 component: () =>
-                    import ('@/views/my-components/text-editor/text-editor.vue')
+                    import ('@/views/blog/blog/index.vue')
             },
             {
                 path: 'notice-editor',
                 icon: 'speakerphone',
                 name: 'notice-editor',
                 title: '公告管理',
+                meta: {
+                    requireAuth: true 
+                  },
                 component: () =>
                     import ('@/views/blog/notice/notice-list.vue')
             },
@@ -251,6 +314,7 @@ export const routers = [
     preview,
     locking,
     blog,
+    index,
     ...appRouter,
     page500,
     page403,

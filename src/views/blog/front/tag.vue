@@ -9,7 +9,7 @@
             <router-link tag="li" to="/blog/tag" style="margin-left:0;margin-right: 15px;margin-top: 15px; ">
               <a>All</a>
             </router-link>
-            <router-link style="margin-left:0;margin-right: 15px;margin-top: 15px; " v-for="tag in tagList" :key="tag.id" tag="li" v-bind:to="'/blog/tag/' + tag.tagName">
+            <router-link style="margin-left:0;margin-right: 15px;margin-top: 15px; " v-for="tag in tagList" :key="tag.id" tag="li" v-bind:to="'/tag/' + tag.tagName">
               <a>{{tag.tagName}}</a>
             </router-link>
           </ul>
@@ -17,7 +17,7 @@
       </header>
       <div class="article-body">
         <div v-for="tag in tagList" :key="tag.id" v-if="tag.count>0 && articles[tag.tagName]">
-          <router-link tag="h3" class="panel-title mb-1x" v-bind:to="'/blog/tag/' + tag.tagName">
+          <router-link tag="h3" class="panel-title mb-1x" v-bind:to="'/tag/' + tag.tagName">
             <a v-bind:title="'#' + tag.tagName">{{ '#' + tag.tagName}}</a>
             <small class="text-muted">{{'(Total ' +tag.count+ ' articles)'}}</small>
           </router-link>
@@ -29,11 +29,11 @@
                     <time v-bind:datetime="article.publishTime" itemprop="datePublished">{{article.publishTime | formatDate}}</time>
                   </div>
                   <h3 class="article-title" itemprop="name">
-                    <router-link tag="a" v-bind:to="'/blog/article/'+ article.id" class="article-link">{{article.articleTitle}}</router-link>
+                    <router-link tag="a" v-bind:to="'/article/'+ article.id" class="article-link">{{article.articleTitle}}</router-link>
                   </h3>
                 </div>
                 <div class="panel-footer">
-                  <router-link v-for="_tag in article.tags" :key="_tag.id" tag="a" v-bind:to="'/blog/tag/' + _tag.tagName" class="label label-default mb"
+                  <router-link v-for="_tag in article.tags" :key="_tag.id" tag="a" v-bind:to="'/tag/' + _tag.tagName" class="label label-default mb"
                     style="margin-right: 5px">{{_tag.tagName}}</router-link>
                 </div>
               </article>
@@ -97,7 +97,7 @@
     },
     watch: {
       '$route' (to, from) {
-        if (to.path.indexOf("/blog/tag") >= 0) {
+        if (to.path.indexOf("/tag") >= 0) {
           this.getData(to);
         }
       }

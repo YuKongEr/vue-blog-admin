@@ -11,13 +11,13 @@ let routerMode = 'history';
 let baseImgPath;
 
 if (process.env.NODE_ENV == 'development') {
-    baseUrl = 'http://localhost:9090';
-    baseImgPath = 'http://localhost:9090/images';
+    baseUrl = 'http://127.0.0.1:9090';
+    baseImgPath = 'http://127.0.0.1:9090/images';
 
 
 } else {
-    baseUrl = 'http://localhost:9090';
-    baseImgPath = 'http://localhost:9090/images';
+    baseUrl = 'http://115.159.219.176:9090';
+    baseImgPath = 'http://115.159.219.176:9090/images';
 }
 
 export {

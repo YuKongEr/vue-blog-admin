@@ -27,7 +27,7 @@
                             </Input>
                         </FormItem>
                         <FormItem>
-                            <Button @click="handleSubmit" type="primary" long>登录</Button>
+                            <Button @click="handleSubmit" type="primary" long :loading="loadding">登录</Button>
                         </FormItem>
                     </Form>
                     <p class="login-tip">输入任意用户名和密码即可</p>
@@ -45,6 +45,7 @@
     export default {
         data() {
             return {
+                loadding:false,
                 form: {
                     userName: 'yukong',
                     password: ''
@@ -66,6 +67,7 @@
         methods: {
             handleSubmit() {
                 this.$refs.loginForm.validate((valid) => {
+                    this.loadding = true;
                     if (valid) {
 
 
@@ -86,6 +88,7 @@
                                 } else {
                                     Cookies.set('access', 1);
                                 }
+                                this.loadding = false;
                                 this.$router.push({
                                     name: 'home_index'
                                 });

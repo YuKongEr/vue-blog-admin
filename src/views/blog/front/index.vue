@@ -83,7 +83,7 @@ Roboto, 'Helvetica Neue ', Arial,'PingFang SC ', 'Hiragino Sans GB ', 'Microsoft
                 <span class="menu-title">标签</span>
               </a>
             </router-link>
-            <!--    <li class="menu-item menu-item-repository">
+          <!--  <li class="menu-item menu-item-repository">
               <a href="/repository">
                 <i class="icon icon-project"></i>
                 <span class="menu-title">项目</span>
@@ -106,7 +106,7 @@ Roboto, 'Helvetica Neue ', Arial,'PingFang SC ', 'Hiragino Sans GB ', 'Microsoft
                 <i class="icon icon-cup-fill"></i>
                 <span class="menu-title">关于</span>
               </a>
-            </li>
+            </li>-->
           </ul>
           <ul class="social-links">
             <li>
