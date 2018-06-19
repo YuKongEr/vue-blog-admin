@@ -2,7 +2,10 @@
   @import './css/style.css';
 </style>
 <template>
-  <div class="main-center" itemscope itemtype="http://schema.org/WebPage">
+  <div style="    position: relative;
+ overflow-x: hidden; padding-right: 0 !important; font-family: -apple-system, system-ui, BlinkMacSystemFont, ' Segoe UI ',
+Roboto, 'Helvetica Neue ', Arial,'PingFang SC ', 'Hiragino Sans GB ', 'Microsoft YaHei ', sans-serif; font-size: 14px; line-height:
+1.42857; color: #333; background-color: #fff;" class="main-center" itemscope itemtype="http://schema.org/WebPage">
     <header class="header" itemscope itemtype="http://schema.org/WPHeader">
       <div class="slimContent">
         <div class="navbar-header">
@@ -80,7 +83,7 @@
                 <span class="menu-title">标签</span>
               </a>
             </router-link>
-            <li class="menu-item menu-item-repository">
+            <!--    <li class="menu-item menu-item-repository">
               <a href="/repository">
                 <i class="icon icon-project"></i>
                 <span class="menu-title">项目</span>
@@ -130,7 +133,7 @@
               <a href="/atom.xml" target="_blank" title="Rss" data-toggle="tooltip" data-placement="top">
                 <i class="icon icon-rss"></i>
               </a>
-            </li>
+            </li>-->
           </ul>
         </nav>
       </div>
