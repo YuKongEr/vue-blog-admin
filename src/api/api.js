@@ -107,47 +107,56 @@ export const deleteArticle = param => {
     return axios.delete("/article/id/" + param).then(res => res.data);
 }
 
+//前台查询所有分类
 export const findAllCategory = () => {
     return axios.get("/index/archive/category/").then(res => res.data);
 }
-
+//前台查询根据类别名称分类
 export const findCategoryByName = param => {
     return axios.get("/index/archive/category/" + param).then(res => res.data);
 }
-
+//前台查询所有标签
 export const findAllTag = () => {
     return axios.get("/index/archive/tag").then(res => res.data);
 }
 
-
+//前台查询所有公告
 export const findNotice = () => {
     return axios.get("/index/notice").then(res => res.data);
 }
+
+//前台根据月份归档查询
 export const findAllMonth = () => {
     return axios.get("/index/archive/month").then(res => res.data);
 }
 
+//根据年查询文章
 export const findArticleGroupByYear = () => {
     return axios.get("/index/article/year").then(res => res.data);
 }
 
+//根据类别归档
 export const findArticleGroupByCategory = param => {
     return axios.get("/index/article/category" + param).then(res => res.data);
 }
 
+//根据类别标签
 export const findArticleGroupByTag = param => {
     return axios.get("/index/article/tag" + param).then(res => res.data);
 }
 
+//查询文章
 export const getFrontArticlePage = params => {
     return getPage(params, "/index/article/page");
 }
 
+//主键查询文章
 export const getFrontArticleById = param => {
     return axios.get("/index/article/id/" + param).then(res => res.data);
 }
 
 
+//根据年月归档查询
 export const getArchiveByYearAndMonth = param => {
     return axios.get("/index/archive/" + param.year + "/" + param.month).then(res => res.data);
 }
@@ -170,6 +179,11 @@ export const updateNotice = param => {
 //公告删除
 export const deleteNotice = param => {
     return axios.delete("/notice/id/" + param).then(res => res.data);
+}
+
+//上传图片至七牛云
+export const fileUpload = param => {
+    return axios.post("/file/qiNiu", param);
 }
 
 /**

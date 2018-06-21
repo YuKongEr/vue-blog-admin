@@ -83,7 +83,7 @@ Roboto, 'Helvetica Neue ', Arial,'PingFang SC ', 'Hiragino Sans GB ', 'Microsoft
                 <span class="menu-title">标签</span>
               </a>
             </router-link>
-          <!--  <li class="menu-item menu-item-repository">
+            <!--  <li class="menu-item menu-item-repository">
               <a href="/repository">
                 <i class="icon icon-project"></i>
                 <span class="menu-title">项目</span>
@@ -313,7 +313,7 @@ Roboto, 'Helvetica Neue ', Arial,'PingFang SC ', 'Hiragino Sans GB ', 'Microsoft
       return {
         person: {
           name: "yukong",
-          desc: "you need do batter",
+          desc: "you need do better",
           address: "Hangzhou,China"
         },
         tagList: [],

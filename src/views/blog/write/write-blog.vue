@@ -47,7 +47,7 @@
             </Select>
             </Col>
           </Row>
-          <mavon-editor v-model="content" :toolbars="toolbars" :codeStyle="'monokai-sublime'" style="height:490px;margin-bottom:50px;"
+          <mavon-editor ref="md" v-model="content" :toolbars="toolbars" :codeStyle="'monokai-sublime'" @imgAdd="$imgAdd" style="height:490px;margin-bottom:50px;"
           />
           <Affix :offset-bottom="20">
             <span style=" right:260px;position: absolute;bottom:20px; ">当前状态:
@@ -69,7 +69,8 @@
     getTagPage,
     getCategoryPage,
     addArticle,
-    getFrontArticleById
+    getFrontArticleById,
+    fileUpload
   } from "@/api/api";
   export default {
     data: function () {
@@ -240,7 +241,24 @@
           ids.push(element.id);
         });
         return ids;
+      },
+      // 绑定@imgAdd event
+      async $imgAdd(pos, $file) {
+        // 第一步.将图片上传到服务器. 
+        let obj = {
+          base64: $file.miniurl.substring($file.miniurl.indexOf(",") + 1)
+        }
+        console.log(obj);
+        let res = await fileUpload(obj);
+        console.log(res);
+        if (res.data.code == 1) {
+          this.$refs.md.$img2Url(pos, "http://ou9cvvos8.bkt.clouddn.com/" + res.data.data);
+
+        } else {
+          this.$Message.error("图片上传失败！");
+        }
+
       }
     }
-  };
+  }
 </script>
