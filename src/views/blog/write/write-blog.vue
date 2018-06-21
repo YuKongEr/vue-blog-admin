@@ -1,10 +1,9 @@
 <style lang="less">
-  @import '../../../styles/common.less';
+  @import "../../../styles/common.less";
   .title,
   .tag {
     margin-bottom: 20px;
     z-index: 10000;
-
   }
 
   .my-tag {
@@ -14,10 +13,12 @@
     padding-left: 7px;
     padding-right: 7px;
   }
-  .sred{
+
+  .sred {
     color: red;
   }
-  .sgreen{
+
+  .sgreen {
     color: green;
   }
 </style>
@@ -49,7 +50,10 @@
           <mavon-editor v-model="content" :toolbars="toolbars" :codeStyle="'monokai-sublime'" style="height:490px;margin-bottom:50px;"
           />
           <Affix :offset-bottom="20">
-            <span  style=" right:200px;position: absolute;bottom:20px; ">当前状态: <span :class="isPushlish?'sgreen':'sred'">{{publishStr}}</span></span>
+            <span style=" right:260px;position: absolute;bottom:20px; ">当前状态:
+              <span :class="isPushlish?'sgreen':'sred'">{{publishStr}}</span>
+            </span>
+            <Button type="error" @click="draft" style=" right:110px;position: absolute;bottom:20px; ">存为草稿</Button>
             <Button type="primary" @click="publish" style=" right:50px;position: absolute;bottom:20px; ">发布</Button>
 
           </Affix>
@@ -66,7 +70,7 @@
     getCategoryPage,
     addArticle,
     getFrontArticleById
-  } from '@/api/api'
+  } from "@/api/api";
   export default {
     data: function () {
       return {
@@ -76,7 +80,8 @@
         tagData: [],
         loading: false,
         options: [],
-        articleStatus:0,
+        articleStatus: -1,
+        id: "",
         content: "",
         toolbars: {
           bold: true, // 粗体
@@ -116,58 +121,54 @@
       };
     },
     async mounted() {
-      
-    this.init();
+      this.init();
     },
-    computed:{
-      isPushlish(){
-        if(this.articleStatus == 1){
+    computed: {
+      isPushlish() {
+        if (this.articleStatus == 1) {
           return true;
         } else {
           return false;
         }
       },
-       publishStr(){
-        if(this.articleStatus == 1){
+      publishStr() {
+        if (this.articleStatus == 1) {
           return "发布";
-        } else if(this.articleStatus == 0){
+        } else if (this.articleStatus == 0) {
           return "草稿";
         }
       }
     },
     methods: {
-      async init(){
+      async init() {
         let id = this.$route.params.id;
+        let res = await getCategoryPage({
+          currPage: 0,
+          pageSize: 9999
+        });
+        this.categoryOptions = res.content;
         if (id != undefined && id != "") {
           let articleRes = await getFrontArticleById(id);
           articleRes = articleRes.data;
-
+          this.id = articleRes.id;
           this.title = articleRes.articleTitle;
           this.content = articleRes.articleContent;
           this.categoryData = articleRes.category.id;
           this.tagData = this.transferTagObj2Array(articleRes.tags);
           this.options = articleRes.tags;
           this.articleStatus = articleRes.articleStatus;
-          console.log(this.options);
         }
-
-        let res = await getCategoryPage({
-          currPage: 0,
-          pageSize: 9999
-        })
-        this.categoryOptions = res.content;
       },
       async remoteMethod(query) {
-        if (query !== '') {
+        if (query !== "") {
           this.loading = true;
           let res = await getTagPage({
             currPage: 0,
             pageSize: 9999,
             tagName: query
-          })
+          });
           this.loading = false;
           this.options = res.content;
-
         } else {
           this.options = [];
         }
@@ -189,30 +190,54 @@
           this.$Message.error("博客正文不能为空！");
           return;
         }
-        this.save();
+        this.articleStatus = 1;
+        this.save("发布");
       },
 
-      async save() {
+      draft() {
+        if (this.title == "") {
+          this.$Message.error("博客标题不能为空！");
+          return;
+        }
+        if (this.categoryData == "") {
+          this.$Message.error("博客类别不能为空！");
+          return;
+        }
+        if (this.tagData.length <= 0) {
+          this.$Message.error("博客标签不能为空！");
+          return;
+        }
+        if (this.content == "") {
+          this.$Message.error(
+            "博客正文不能为空！");
+          return;
+        }
+        this.articleStatus = 0;
+        this.save("保存");
+      },
+
+      async save(str) {
         this.loading = true;
         let article = {};
         article.articleTitle = this.title;
         article.categoryId = this.categoryData;
         article.tagIds = this.tagData;
         article.articleContent = this.content;
+        article.articleStatus = this.articleStatus;
+        article.id = this.id;
         let res = await addArticle(article);
         if (res.data.code == 1) {
-          this.$Message.success("博客" + article.articleTitle + " 发布成功");
+          this.$Message.success("博客" + article.articleTitle + " " + str + "成功");
           this.loading = false;
         } else {
-          this.$Message.error("博客" + article.articleTitle + " 发布失败");
+          this.$Message.error("博客" + article.articleTitle + " " + str + "失败");
         }
-
       },
 
-      transferTagObj2Array(tags){
+      transferTagObj2Array(tags) {
         let ids = new Array();
         tags.forEach(element => {
-          ids.push(element.id)
+          ids.push(element.id);
         });
         return ids;
       }

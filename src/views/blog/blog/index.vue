@@ -1,5 +1,5 @@
 <template>
-    <Row class="blog-page">
+  <Row class="blog-page">
     <Row>
       <Col span="12" class="blog-header">
       <Button type="success" :disabled="setting.loading" icon="refresh" @click="doRefresh">刷新</Button>
@@ -19,7 +19,7 @@
     </Col>
 
 
-   
+
     <Modal v-model="removeModal" width="360">
       <p slot="header" style="color:#f60;text-align:center">
         <Icon type="information-circled"></Icon>
@@ -36,19 +36,23 @@
 </template>
 
 <script>
-import {getArticlePage} from '@/api/api'
-import dayjs from 'dayjs'
-export default {
-    data(){
-        return {
-            removeModal:false,
-            query:{
-                articleTitle:""
-            },
-            setting:{
-                loading:false,
-                showBorder:true
-            }, columns: [{
+  import {
+    getArticlePage,
+    deleteArticle
+  } from '@/api/api'
+  import dayjs from 'dayjs'
+  export default {
+    data() {
+      return {
+        removeModal: false,
+        query: {
+          articleTitle: ""
+        },
+        setting: {
+          loading: false,
+          showBorder: true
+        },
+        columns: [{
             title: 'id',
             key: 'id',
             sortable: true
@@ -62,25 +66,25 @@ export default {
             key: 'category',
             render: (h, params) => {
               return h('div', [
-                                h('Icon', {
-                                    props: {
-                                        type: 'ios-folder'
-                                    }
-                                }),
-                                h('strong', '  '+params.row.category.categoryName)
-                    ]);
+                h('Icon', {
+                  props: {
+                    type: 'ios-folder'
+                  }
+                }),
+                h('strong', '  ' + params.row.category.categoryName)
+              ]);
             }
-            
+
           },
           {
             title: '博客状态',
             key: 'articleStatus',
-             render:(h,params) => {
-                return h('span',
-                    {
-                        style: {color: params.row.articleStatus == 1 ? 'green' : 'red'
-                    }
-                }, params.row.articleStatus == 1 ? '发布' : '草稿')
+            render: (h, params) => {
+              return h('span', {
+                style: {
+                  color: params.row.articleStatus == 1 ? 'green' : 'red'
+                }
+              }, params.row.articleStatus == 1 ? '发布' : '草稿')
             },
             sortable: true
           },
@@ -112,7 +116,7 @@ export default {
                     }
                   }
                 }, '修改'),
-                 h('Button', {
+                h('Button', {
                   props: {
                     type: 'error',
                     size: 'small'
@@ -138,54 +142,71 @@ export default {
           pageSize: 5,
           currPage: 1
         }
-        }
+      }
     },
-    created(){
+    created() {
+      this.getData()
+    },
+    methods: {
+      async getData() {
+        this.setting.loading = true;
+        let res = await getArticlePage({
+          currPage: this.page.currPage - 1,
+          pageSize: this.page.pageSize,
+          articleTitle: this.query.articleTitle
+        })
+        this.data = res.content;
+        this.page.total = res.totalElements;
+        this.setting.loading = false;
+      },
+      /**
+       * 页码改变
+       */
+      currPageChange(currPage) {
+        this.page.currPage = currPage;
         this.getData()
-    },
-    methods:{
-        async getData(){
-            this.setting.loading = true;
-            let res = await getArticlePage({
-            currPage: this.page.currPage - 1,
-            pageSize: this.page.pageSize,
-            articleTitle: this.query.articleTitle
-            })
-            this.data = res.content;
-            this.page.total = res.totalElements;
-            this.setting.loading = false;
-        },
-        /**
-        * 页码改变
-        */
-        currPageChange(currPage) {
-          this.page.currPage = currPage;
-          this.getData()
-        },
+      },
 
-        /**
-        * pageSize改变
-        */
-        pageSizeChange(pageSize) {
-          this.page.pageSize = pageSize;
-          this.getData();
-        },
-        doRefresh() {
+      /**
+       * pageSize改变
+       */
+      pageSizeChange(pageSize) {
+        this.page.pageSize = pageSize;
         this.getData();
-        },
-        remove(){},
-        renderTags(tags){
-          console.log(tags);
-          return tags.length;
-        },
-        openModifyBlog(id){
-            this.$router.push({path:'/write-blog/index/' + id});
+      },
+      doRefresh() {
+        this.getData();
+      },
+      async remove() {
+        this.removeModal = false;
+        if (this.removeObject == null) {
+          this.$Message.warning("删除对象为空，无法继续执行！");
+          return false;
         }
+        this.setting.loading = true;
+        try {
+          let res = await deleteArticle(this.removeObject.obj.id);
+          this.$Message.success("删除成功");
+          this.data.splice(this.removeObject.index,
+            1);
+        } catch (error) {
+          this.$throw(error)
+        }
+        this.setting.loading = false;
+      },
+      renderTags(tags) {
+        return tags.length;
+      },
+      openModifyBlog(id) {
+        this.$router.push({
+          path: '/write-blog/index/' + id
+        });
+      }
     }
-}
+  }
 </script>
 <style lang="less" scoped>
- .blog-page {
+  .blog-page {
     background-color: #fff;
     padding-top: 10px;
     padding-left: 5px;

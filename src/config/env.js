@@ -16,8 +16,8 @@ if (process.env.NODE_ENV == 'development') {
 
 
 } else {
-    baseUrl = 'http://115.159.219.176:9090';
-    baseImgPath = 'http://115.159.219.176:9090/images';
+    baseUrl = 'http://127.0.0.1:9090';
+    baseImgPath = 'http://127.0.0.1:9090/images';
 }
 
 export {
