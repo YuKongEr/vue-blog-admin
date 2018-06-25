@@ -16,13 +16,14 @@
               <i class="icon icon-folder"></i>
               <a class="article-category-link">{{article.category.categoryName}}</a>
             </router-link>
+
             <span class="article-tag" v-for="tag in article.tags" :key="tag.id">
               <i class="icon icon-tags"></i>
-              <a class="article-tag-link" href="/tags/Github/">{{tag.tagName}}</a>
+              <router-link class="article-tag-link" tag="a" v-bind:to="'/blog/tag/' + tag.tagName">{{tag.tagName}}</router-link>
             </span>
             <span class="post-comment">
               <i class="icon icon-comment"></i>
-              <a href="/2017/04/09/hexo-builds-a-personal-blog-and-deploys-to-github.html#comments" class="article-comment-link">评论</a>
+              <a class="article-comment-link">评论</a>
             </span>
 
           </div>
@@ -71,17 +72,21 @@
         </div>
       </section>
     </div>
-    <nav class="bar bar-footer clearfix sticky-bottom" style="position: absolute;position: fixed; width: 680px; height: 52px; z-index: 42; bottom:0; "
-      data-stick-bottom>
+    <nav class="bar bar-footer clearfix " data-stick-bottom>
       <div class="bar-inner">
         <ul class="pager pull-left">
-          <li class="prev">
-            <a href="/2017/08/06/gulp-comon-plug-in-colation.html" title="gulp常用插件整理">
+          <li class="prev" v-if="article.atfId > -1 && article.atfId != null">
+            <router-link tag="a" v-bind:to="'/blog/article/' + article.atfId" v-bind:title="article.title">
               <i class="icon icon-angle-left" aria-hidden="true"></i>
               <span>&nbsp;&nbsp;上一篇</span>
-            </a>
+            </router-link>
           </li>
-
+          <li class="next" v-if="article.preId > -1 && article.preId != null">
+            <router-link tag="a" v-bind:to="'/blog/article/' + article.preId" v-bind:title="article.title">
+              <i class="icon icon-angle-right" aria-hidden="true"></i>
+              <span>&nbsp;&nbsp;下一篇</span>
+            </router-link>
+          </li>
         </ul>
         <button type="button" class="btn btn-fancy btn-donate pop-onhover bg-gradient-warning" data-toggle="modal" data-target="#donateModal">
           <span>赏</span>
@@ -155,7 +160,8 @@
     data() {
       return {
         article: {
-
+          preId: -1,
+          atfId: -1,
           articleTitle: "",
           articleContent: "",
           publishTime: new Date(),
@@ -177,7 +183,7 @@
       }
     },
     created() {
-      this.getData();
+      this.getData(this.$route);
       this.markdown();
 
     },
@@ -201,12 +207,19 @@
           }
         })
       },
-      async getData() {
+      async getData(route) {
 
-        let res = await getFrontArticleById(this.$route.params.id);
+        let res = await getFrontArticleById(route.params.id);
         Object.assign(this.article, res.data);
         console.log(this.article);
 
+      }
+    },
+    watch: {
+      '$route' (to, from) {
+        if (to.path.indexOf("/blog/article") >= 0) {
+          this.getData(to)
+        }
       }
     }
   }

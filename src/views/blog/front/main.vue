@@ -19,18 +19,19 @@
         </span>
         <span class="article-category">
           <i class="icon icon-folder"></i>
-          <a class="article-category-link" href="/categories/开发/">{{article.category.categoryName}}</a>
+          <router-link tag="a" class="article-category-link" v-bind:to="'/blog/tag/' + article.category.categoryName">{{article.category.categoryName}}</router-link>
         </span>
         <span class="article-tag" v-for="tag in article.tags" :key="tag.id">
           <i class="icon icon-tags"></i>
-          <a class="article-tag-link" href="/tags/程序员/">{{tag.tagName}}</a>
+
+          <router-link class="article-tag-link" tag="a" v-bind:to="'/blog/tag/' + tag.tagName">{{tag.tagName}}</router-link>
         </span>
         <span class="post-comment">
           <i class="icon icon-comment"></i>
-          <a href="/2018/03/28/那些有趣的注释，有没有你曾用过的.html#comments" class="article-comment-link">评论</a>
+          <a class="article-comment-link">评论</a>
         </span>
-        <span class="post-wordcount hidden-xs" itemprop="wordCount">字数统计: 1,011(字)</span>
-        <span class="post-readcount hidden-xs" itemprop="timeRequired">阅读时长: 5(分)</span>
+        <!-- <span class="post-wordcount hidden-xs" itemprop="wordCount">字数统计: 1,011(字)</span>
+        <span class="post-readcount hidden-xs" itemprop="timeRequired">阅读时长: 5(分)</span>-->
       </p>
     </article>
 
