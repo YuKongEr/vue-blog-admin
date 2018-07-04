@@ -107,6 +107,13 @@ export const deleteArticle = param => {
     return axios.delete("/article/id/" + param).then(res => res.data);
 }
 
+//查询用户信息
+export const getUserById = param => {
+    return axios.get("/user/" + param).then(res => res.data);
+}
+
+
+
 //前台查询所有分类
 export const findAllCategory = () => {
     return axios.get("/index/archive/category/").then(res => res.data);

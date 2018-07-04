@@ -45,7 +45,7 @@
     export default {
         data() {
             return {
-                loadding:false,
+                loadding: false,
                 form: {
                     userName: 'yukong',
                     password: ''
@@ -78,7 +78,8 @@
                             if (res.data.code ==
                                 1) {
                                 Cookies.set("token", res.headers.authorization);
-                                Cookies.set('user', this.form.userName);
+                                Cookies.set('user', res.data.data.userName);
+                                Cookies.set('userId', res.data.data.userId);
                                 Cookies.set('password', this.form.password);
                                 this.$store.commit('setAvator',
                                     'https://ss1.bdstatic.com/70cFvXSh_Q1YnxGkpoWK1HF6hhy/it/u=3448484253,3685836170&fm=27&gp=0.jpg'
@@ -88,7 +89,6 @@
                                 } else {
                                     Cookies.set('access', 1);
                                 }
-                                this.loadding = false;
                                 this.$router.push({
                                     name: 'home_index'
                                 });
@@ -98,7 +98,7 @@
                                     title: '用户名或者密码错误',
                                     duration: 2
                                 });
-
+                                this.loadding = false;
                             }
                         })
 
