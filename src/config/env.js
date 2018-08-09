@@ -11,13 +11,13 @@ let routerMode = 'history';
 let baseImgPath;
 
 if (process.env.NODE_ENV == 'development') {
-    baseUrl = 'http://127.0.0.1:9090';
-    baseImgPath = 'http://127.0.0.1:9090/images';
+    baseUrl = 'https://www.yukonga.cn/bg';
+    baseImgPath = 'https://www.yukonga.cn/bg/images';
 
 
 } else {
-    baseUrl = 'http://127.0.0.1:9090';
-    baseImgPath = 'http://127.0.0.1:9090/images';
+    baseUrl = 'https://www.yukonga.cn/bg';
+    baseImgPath = 'https://www.yukonga/bg/images';
 }
 
 export {

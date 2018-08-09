@@ -218,6 +218,7 @@
     watch: {
       '$route' (to, from) {
         if (to.path.indexOf("/blog/article") >= 0) {
+          console.log(to.path)
           this.getData(to)
         }
       }

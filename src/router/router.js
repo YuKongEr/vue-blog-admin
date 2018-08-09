@@ -44,17 +44,11 @@ export const page500 = {
         requireAuth: false,
     },
     name: 'error-500',
-  
+
     component: () =>
         import ('@/views/error-page/500.vue')
 };
 
-export const preview = {
-    path: '/preview',
-    name: 'preview',
-    component: () =>
-        import ('@/views/form/article-publish/preview.vue')
-};
 
 export const locking = {
     path: '/locking',
@@ -207,7 +201,7 @@ export const otherRouter = {
             name: 'write_blog_index1',
             meta: {
                 keepAlive: true // 需要被缓存
-              },
+            },
             component: () =>
                 import ('@/views/blog/write/write-blog.vue')
         }
@@ -228,8 +222,8 @@ export const appRouter = [
             title: '错误页面',
             name: 'errorpage_index',
             meta: {
-                requireAuth: true 
-              },
+                requireAuth: true
+            },
             component: () =>
                 import ('@/views/error-page/error-page.vue')
         }]
@@ -245,8 +239,8 @@ export const appRouter = [
             title: '写博客',
             name: 'write_blog_index',
             meta: {
-                requireAuth: true 
-              },
+                requireAuth: true
+            },
             component: () =>
                 import ('@/views/blog/write/write-blog.vue')
         }]
@@ -264,8 +258,8 @@ export const appRouter = [
                 name: 'category-list',
                 title: '类目管理',
                 meta: {
-                    requireAuth: true 
-                  },
+                    requireAuth: true
+                },
                 component: () =>
                     import ('@/views/blog/category/category-list.vue')
             },
@@ -275,8 +269,8 @@ export const appRouter = [
                 name: 'tag-list',
                 title: '标签管理',
                 meta: {
-                    requireAuth: true 
-                  },
+                    requireAuth: true
+                },
                 component: () =>
                     import ('@/views/blog/tag/tag-list.vue')
             },
@@ -286,8 +280,8 @@ export const appRouter = [
                 name: 'blog-list',
                 title: '博文管理',
                 meta: {
-                    requireAuth: true 
-                  },
+                    requireAuth: true
+                },
                 component: () =>
                     import ('@/views/blog/blog/index.vue')
             },
@@ -297,8 +291,8 @@ export const appRouter = [
                 name: 'notice-editor',
                 title: '公告管理',
                 meta: {
-                    requireAuth: true 
-                  },
+                    requireAuth: true
+                },
                 component: () =>
                     import ('@/views/blog/notice/notice-list.vue')
             },
@@ -311,7 +305,6 @@ export const appRouter = [
 export const routers = [
     loginRouter,
     otherRouter,
-    preview,
     locking,
     blog,
     index,
